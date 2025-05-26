@@ -44,9 +44,13 @@ final class Wpls_Core
 
   private function init_components(): void
   {
-
     if (is_admin()) {
-      $admin = new \WishlistSimple\Admin\Wpls_Admin($this->version, $this->text_domain);
+      $admin = new \WishlistSimple\Admin\Wpls_Admin(
+        $this->version,
+        $this->text_domain,
+        WPLS_PLUGIN_DIR,  // Add plugin path
+        WPLS_PLUGIN_URL   // Add plugin URL
+      );
       $admin->init();
     }
 

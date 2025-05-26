@@ -55,10 +55,6 @@ if (! defined('WPLS_MIN_WP_VERSION')) {
 
 function wpls_activate_wishlist_simple(): void
 {
-  // We need to ensure the Wpls_Database class can be loaded if it hasn't been already
-  // by the main autoloader sequence (which runs after activation hooks typically).
-  // So, we require its file directly here or ensure autoloader is primed.
-  // For simplicity during activation, directly requiring the Database class file is robust.
   require_once WPLS_PLUGIN_DIR . 'includes/core/class-wpls-database.php';
   WishlistSimple\Core\Wpls_Database::create_tables();
   WishlistSimple\Core\Wpls_Database::create_wishlist_page();

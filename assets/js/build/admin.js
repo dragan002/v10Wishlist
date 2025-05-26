@@ -1,280 +1,6 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./assets/js/src/react/components/WishlistPage.jsx":
-/*!*********************************************************!*\
-  !*** ./assets/js/src/react/components/WishlistPage.jsx ***!
-  \*********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/toast/use-toast.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/flex/flex.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/spinner/spinner.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/alert/alert.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/alert/alert-icon.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/box/box.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/typography/text.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/button/button.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/grid/simple-grid.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/image/image.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/typography/heading.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/button/icon-button.mjs");
-/* harmony import */ var _chakra_ui_icons__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @chakra-ui/icons */ "./node_modules/@chakra-ui/icons/dist/esm/Close.mjs");
-
-
-
-
-const WishlistPage = () => {
-  const [items, setItems] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
-  const [loading, setLoading] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(true);
-  const [error, setError] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
-  const toast = (0,_chakra_ui_react__WEBPACK_IMPORTED_MODULE_2__.useToast)();
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    fetchWishlistItems();
-  }, []);
-  const fetchWishlistItems = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(`${wpls_wishlist_data.ajax_url}?action=wpls_get_wishlist_items&nonce=${wpls_wishlist_data.nonce}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch wishlist items');
-      }
-      const data = await response.json();
-      if (data.success) {
-        setItems(data.data);
-      } else {
-        setError(data.data.message || 'Error loading wishlist');
-      }
-    } catch (err) {
-      setError('Error loading wishlist data');
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-  const addToCart = async productId => {
-    try {
-      setLoading(true);
-      const response = await fetch(`${wpls_wishlist_data.ajax_url}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: new URLSearchParams({
-          action: 'wpls_add_to_cart_from_wishlist',
-          product_id: productId,
-          nonce: wpls_wishlist_data.nonce
-        })
-      });
-      const data = await response.json();
-      if (data.success) {
-        toast({
-          title: 'Added to cart',
-          description: data.data.message,
-          status: 'success',
-          duration: 3000,
-          isClosable: true
-        });
-      } else {
-        throw new Error(data.data.message || 'Failed to add to cart');
-      }
-    } catch (err) {
-      toast({
-        title: 'Error',
-        description: err.message,
-        status: 'error',
-        duration: 3000,
-        isClosable: true
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-  const removeItem = async itemId => {
-    try {
-      const response = await fetch(`${wpls_wishlist_data.ajax_url}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: new URLSearchParams({
-          action: 'wpls_remove_from_wishlist',
-          item_id: itemId,
-          nonce: wpls_wishlist_data.nonce
-        })
-      });
-      if (!response.ok) {
-        throw new Error('Failed to remove item');
-      }
-      const data = await response.json();
-      if (data.success) {
-        setItems(items.filter(item => item.id !== itemId));
-        toast({
-          title: 'Item removed',
-          status: 'success',
-          duration: 2000
-        });
-      } else {
-        throw new Error(data.data.message || 'Failed to remove item');
-      }
-    } catch (err) {
-      toast({
-        title: 'Error',
-        description: err.message,
-        status: 'error',
-        duration: 3000,
-        isClosable: true
-      });
-    }
-  };
-  const clearWishlist = async () => {
-    if (!window.confirm('Are you sure you want to clear your wishlist?')) {
-      return;
-    }
-    try {
-      const response = await fetch(`${wpls_wishlist_data.ajax_url}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: new URLSearchParams({
-          action: 'wpls_clear_wishlist',
-          nonce: wpls_wishlist_data.nonce
-        })
-      });
-      if (!response.ok) {
-        throw new Error('Failed to clear wishlist');
-      }
-      const data = await response.json();
-      if (data.success) {
-        setItems([]);
-        toast({
-          title: 'Wishlist cleared',
-          status: 'success',
-          duration: 2000
-        });
-      } else {
-        throw new Error(data.data.message || 'Failed to clear wishlist');
-      }
-    } catch (err) {
-      toast({
-        title: 'Error',
-        description: err.message,
-        status: 'error',
-        duration: 3000,
-        isClosable: true
-      });
-    }
-  };
-  if (loading) {
-    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_3__.Flex, {
-      justify: "center",
-      align: "center",
-      minH: "200px"
-    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_4__.Spinner, {
-      size: "xl",
-      color: "blue.500"
-    }));
-  }
-  if (error) {
-    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_5__.Alert, {
-      status: "error",
-      borderRadius: "md"
-    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_6__.AlertIcon, null), error);
-  }
-  if (items.length === 0) {
-    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__.Box, {
-      textAlign: "center",
-      py: 10
-    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Text, {
-      mb: 4
-    }, "Your wishlist is empty."), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_9__.Button, {
-      as: "a",
-      href: wpls_wishlist_data.shop_url,
-      colorScheme: "blue"
-    }, "Browse Products"));
-  }
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__.Box, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__.Box, {
-    mb: 6
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_3__.Flex, {
-    justify: "space-between",
-    align: "center"
-  }, items.length > 0 && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_9__.Button, {
-    colorScheme: "red",
-    variant: "outline",
-    onClick: clearWishlist
-  }, "Clear Wishlist"))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_10__.SimpleGrid, {
-    columns: {
-      base: 1,
-      md: 2,
-      lg: 3
-    },
-    spacing: 6
-  }, items.map(item => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__.Box, {
-    key: item.id,
-    borderWidth: "1px",
-    borderRadius: "lg",
-    p: 4,
-    transition: "all 0.3s",
-    _hover: {
-      transform: "translateY(-4px)",
-      boxShadow: "lg"
-    }
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__.Box, {
-    overflow: "hidden",
-    borderRadius: "md",
-    mb: 3
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_11__.Image, {
-    src: item.image,
-    alt: item.name,
-    transition: "0.3s ease",
-    _hover: {
-      transform: "scale(1.05)"
-    }
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_12__.Heading, {
-    size: "md",
-    my: 2,
-    noOfLines: 2
-  }, item.name), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__.Box, {
-    dangerouslySetInnerHTML: {
-      __html: item.price_html
-    },
-    mb: 3
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__.Box, {
-    position: "absolute",
-    top: 2,
-    right: 2,
-    zIndex: 2
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_13__.IconButton, {
-    "aria-label": "Remove from wishlist",
-    icon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_icons__WEBPACK_IMPORTED_MODULE_14__.CloseIcon, null),
-    size: "sm",
-    borderRadius: "full",
-    colorScheme: "gray",
-    onClick: () => removeItem(item.id)
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_9__.Button, {
-    colorScheme: "red",
-    size: "lg",
-    width: "full",
-    onClick: () => addToCart(item.product_id),
-    _hover: {
-      transform: "scale(1.03)"
-    }
-  }, "Add to Cart")))));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (WishlistPage);
-
-/***/ }),
-
 /***/ "./node_modules/@babel/runtime/helpers/esm/extends.js":
 /*!************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/esm/extends.js ***!
@@ -624,52 +350,6 @@ function useCallbackRef(callback, deps = []) {
 
 /***/ }),
 
-/***/ "./node_modules/@chakra-ui/hooks/dist/esm/use-merge-refs.mjs":
-/*!*******************************************************************!*\
-  !*** ./node_modules/@chakra-ui/hooks/dist/esm/use-merge-refs.mjs ***!
-  \*******************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   assignRef: () => (/* binding */ assignRef),
-/* harmony export */   mergeRefs: () => (/* binding */ mergeRefs),
-/* harmony export */   useMergeRefs: () => (/* binding */ useMergeRefs)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-'use client';
-
-
-function assignRef(ref, value) {
-  if (ref == null)
-    return;
-  if (typeof ref === "function") {
-    ref(value);
-    return;
-  }
-  try {
-    ref.current = value;
-  } catch (error) {
-    throw new Error(`Cannot assign value '${value}' to ref '${ref}'`);
-  }
-}
-function mergeRefs(...refs) {
-  return (node) => {
-    refs.forEach((ref) => {
-      assignRef(ref, node);
-    });
-  };
-}
-function useMergeRefs(...refs) {
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => mergeRefs(...refs), refs);
-}
-
-
-
-
-/***/ }),
-
 /***/ "./node_modules/@chakra-ui/hooks/dist/esm/use-safe-layout-effect.mjs":
 /*!***************************************************************************!*\
   !*** ./node_modules/@chakra-ui/hooks/dist/esm/use-safe-layout-effect.mjs ***!
@@ -764,30 +444,6 @@ const useUpdateEffect = (effect, deps) => {
     };
   }, []);
 };
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@chakra-ui/icons/dist/esm/Close.mjs":
-/*!**********************************************************!*\
-  !*** ./node_modules/@chakra-ui/icons/dist/esm/Close.mjs ***!
-  \**********************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   CloseIcon: () => (/* binding */ CloseIcon)
-/* harmony export */ });
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/icon/create-icon.mjs");
-
-
-const CloseIcon = (0,_chakra_ui_react__WEBPACK_IMPORTED_MODULE_0__.createIcon)({
-  displayName: "CloseIcon",
-  d: "M.439,21.44a1.5,1.5,0,0,0,2.122,2.121L11.823,14.3a.25.25,0,0,1,.354,0l9.262,9.263a1.5,1.5,0,1,0,2.122-2.121L14.3,12.177a.25.25,0,0,1,0-.354l9.263-9.262A1.5,1.5,0,0,0,21.439.44L12.177,9.7a.25.25,0,0,1-.354,0L2.561.44A1.5,1.5,0,0,0,.439,2.561L9.7,11.823a.25.25,0,0,1,0,.354Z"
-});
 
 
 
@@ -1118,360 +774,6 @@ __webpack_require__.r(__webpack_exports__);
 
 const Box = (0,_system_factory_mjs__WEBPACK_IMPORTED_MODULE_0__.chakra)("div");
 Box.displayName = "Box";
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@chakra-ui/react/dist/esm/button/button-context.mjs":
-/*!**************************************************************************!*\
-  !*** ./node_modules/@chakra-ui/react/dist/esm/button/button-context.mjs ***!
-  \**************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   ButtonGroupProvider: () => (/* binding */ ButtonGroupProvider),
-/* harmony export */   useButtonGroup: () => (/* binding */ useButtonGroup)
-/* harmony export */ });
-/* harmony import */ var _chakra_ui_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @chakra-ui/utils */ "./node_modules/@chakra-ui/utils/dist/esm/context.mjs");
-'use client';
-
-
-const [ButtonGroupProvider, useButtonGroup] = (0,_chakra_ui_utils__WEBPACK_IMPORTED_MODULE_0__.createContext)({
-  strict: false,
-  name: "ButtonGroupContext"
-});
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@chakra-ui/react/dist/esm/button/button-icon.mjs":
-/*!***********************************************************************!*\
-  !*** ./node_modules/@chakra-ui/react/dist/esm/button/button-icon.mjs ***!
-  \***********************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   ButtonIcon: () => (/* binding */ ButtonIcon)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var _chakra_ui_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @chakra-ui/utils */ "./node_modules/@chakra-ui/utils/dist/esm/cx.mjs");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var _system_factory_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../system/factory.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/factory.mjs");
-'use client';
-
-
-
-
-
-function ButtonIcon(props) {
-  const { children, className, ...rest } = props;
-  const _children = (0,react__WEBPACK_IMPORTED_MODULE_1__.isValidElement)(children) ? (0,react__WEBPACK_IMPORTED_MODULE_1__.cloneElement)(children, {
-    "aria-hidden": true,
-    focusable: false
-  }) : children;
-  const _className = (0,_chakra_ui_utils__WEBPACK_IMPORTED_MODULE_2__.cx)("chakra-button__icon", className);
-  return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(
-    _system_factory_mjs__WEBPACK_IMPORTED_MODULE_3__.chakra.span,
-    {
-      display: "inline-flex",
-      alignSelf: "center",
-      flexShrink: 0,
-      ...rest,
-      className: _className,
-      children: _children
-    }
-  );
-}
-ButtonIcon.displayName = "ButtonIcon";
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@chakra-ui/react/dist/esm/button/button-spinner.mjs":
-/*!**************************************************************************!*\
-  !*** ./node_modules/@chakra-ui/react/dist/esm/button/button-spinner.mjs ***!
-  \**************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   ButtonSpinner: () => (/* binding */ ButtonSpinner)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var _chakra_ui_styled_system__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @chakra-ui/styled-system */ "./node_modules/@chakra-ui/styled-system/dist/esm/define-styles.mjs");
-/* harmony import */ var _chakra_ui_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @chakra-ui/utils */ "./node_modules/@chakra-ui/utils/dist/esm/cx.mjs");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var _spinner_spinner_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../spinner/spinner.mjs */ "./node_modules/@chakra-ui/react/dist/esm/spinner/spinner.mjs");
-/* harmony import */ var _system_factory_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../system/factory.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/factory.mjs");
-'use client';
-
-
-
-
-
-
-
-function ButtonSpinner(props) {
-  const {
-    label,
-    placement,
-    spacing = "0.5rem",
-    children = /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_spinner_spinner_mjs__WEBPACK_IMPORTED_MODULE_2__.Spinner, { color: "currentColor", width: "1em", height: "1em" }),
-    className,
-    __css,
-    ...rest
-  } = props;
-  const _className = (0,_chakra_ui_utils__WEBPACK_IMPORTED_MODULE_3__.cx)("chakra-button__spinner", className);
-  const marginProp = placement === "start" ? "marginEnd" : "marginStart";
-  const spinnerStyles = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(
-    () => (0,_chakra_ui_styled_system__WEBPACK_IMPORTED_MODULE_4__.defineStyle)({
-      display: "flex",
-      alignItems: "center",
-      position: label ? "relative" : "absolute",
-      [marginProp]: label ? spacing : 0,
-      fontSize: "1em",
-      lineHeight: "normal",
-      ...__css
-    }),
-    [__css, label, marginProp, spacing]
-  );
-  return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_system_factory_mjs__WEBPACK_IMPORTED_MODULE_5__.chakra.div, { className: _className, ...rest, __css: spinnerStyles, children });
-}
-ButtonSpinner.displayName = "ButtonSpinner";
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@chakra-ui/react/dist/esm/button/button.mjs":
-/*!******************************************************************!*\
-  !*** ./node_modules/@chakra-ui/react/dist/esm/button/button.mjs ***!
-  \******************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Button: () => (/* binding */ Button)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var _chakra_ui_hooks__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @chakra-ui/hooks */ "./node_modules/@chakra-ui/hooks/dist/esm/use-merge-refs.mjs");
-/* harmony import */ var _chakra_ui_styled_system__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @chakra-ui/styled-system */ "./node_modules/@chakra-ui/styled-system/dist/esm/theming-props.mjs");
-/* harmony import */ var _chakra_ui_utils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @chakra-ui/utils */ "./node_modules/@chakra-ui/utils/dist/esm/attr.mjs");
-/* harmony import */ var _chakra_ui_utils__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @chakra-ui/utils */ "./node_modules/@chakra-ui/utils/dist/esm/cx.mjs");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var _button_context_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./button-context.mjs */ "./node_modules/@chakra-ui/react/dist/esm/button/button-context.mjs");
-/* harmony import */ var _button_icon_mjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./button-icon.mjs */ "./node_modules/@chakra-ui/react/dist/esm/button/button-icon.mjs");
-/* harmony import */ var _button_spinner_mjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./button-spinner.mjs */ "./node_modules/@chakra-ui/react/dist/esm/button/button-spinner.mjs");
-/* harmony import */ var _use_button_type_mjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./use-button-type.mjs */ "./node_modules/@chakra-ui/react/dist/esm/button/use-button-type.mjs");
-/* harmony import */ var _system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../system/forward-ref.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/forward-ref.mjs");
-/* harmony import */ var _system_use_style_config_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../system/use-style-config.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/use-style-config.mjs");
-/* harmony import */ var _system_factory_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../system/factory.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/factory.mjs");
-'use client';
-
-
-
-
-
-
-
-
-
-
-
-
-
-const Button = (0,_system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_2__.forwardRef)((props, ref) => {
-  const group = (0,_button_context_mjs__WEBPACK_IMPORTED_MODULE_3__.useButtonGroup)();
-  const styles = (0,_system_use_style_config_mjs__WEBPACK_IMPORTED_MODULE_4__.useStyleConfig)("Button", { ...group, ...props });
-  const {
-    isDisabled = group?.isDisabled,
-    isLoading,
-    isActive,
-    children,
-    leftIcon,
-    rightIcon,
-    loadingText,
-    iconSpacing = "0.5rem",
-    type,
-    spinner,
-    spinnerPlacement = "start",
-    className,
-    as,
-    shouldWrapChildren,
-    ...rest
-  } = (0,_chakra_ui_styled_system__WEBPACK_IMPORTED_MODULE_5__.omitThemingProps)(props);
-  const buttonStyles = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => {
-    const _focus = { ...styles?.["_focus"], zIndex: 1 };
-    return {
-      display: "inline-flex",
-      appearance: "none",
-      alignItems: "center",
-      justifyContent: "center",
-      userSelect: "none",
-      position: "relative",
-      whiteSpace: "nowrap",
-      verticalAlign: "middle",
-      outline: "none",
-      ...styles,
-      ...!!group && { _focus }
-    };
-  }, [styles, group]);
-  const { ref: _ref, type: defaultType } = (0,_use_button_type_mjs__WEBPACK_IMPORTED_MODULE_6__.useButtonType)(as);
-  const contentProps = {
-    rightIcon,
-    leftIcon,
-    iconSpacing,
-    children,
-    shouldWrapChildren
-  };
-  return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(
-    _system_factory_mjs__WEBPACK_IMPORTED_MODULE_7__.chakra.button,
-    {
-      disabled: isDisabled || isLoading,
-      ref: (0,_chakra_ui_hooks__WEBPACK_IMPORTED_MODULE_8__.useMergeRefs)(ref, _ref),
-      as,
-      type: type ?? defaultType,
-      "data-active": (0,_chakra_ui_utils__WEBPACK_IMPORTED_MODULE_9__.dataAttr)(isActive),
-      "data-loading": (0,_chakra_ui_utils__WEBPACK_IMPORTED_MODULE_9__.dataAttr)(isLoading),
-      __css: buttonStyles,
-      className: (0,_chakra_ui_utils__WEBPACK_IMPORTED_MODULE_10__.cx)("chakra-button", className),
-      ...rest,
-      children: [
-        isLoading && spinnerPlacement === "start" && /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(
-          _button_spinner_mjs__WEBPACK_IMPORTED_MODULE_11__.ButtonSpinner,
-          {
-            className: "chakra-button__spinner--start",
-            label: loadingText,
-            placement: "start",
-            spacing: iconSpacing,
-            children: spinner
-          }
-        ),
-        isLoading ? loadingText || /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_system_factory_mjs__WEBPACK_IMPORTED_MODULE_7__.chakra.span, { opacity: 0, children: /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(ButtonContent, { ...contentProps }) }) : /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(ButtonContent, { ...contentProps }),
-        isLoading && spinnerPlacement === "end" && /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(
-          _button_spinner_mjs__WEBPACK_IMPORTED_MODULE_11__.ButtonSpinner,
-          {
-            className: "chakra-button__spinner--end",
-            label: loadingText,
-            placement: "end",
-            spacing: iconSpacing,
-            children: spinner
-          }
-        )
-      ]
-    }
-  );
-});
-Button.displayName = "Button";
-function ButtonContent(props) {
-  const { leftIcon, rightIcon, children, iconSpacing, shouldWrapChildren } = props;
-  if (!shouldWrapChildren) {
-    return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [
-      leftIcon && /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_button_icon_mjs__WEBPACK_IMPORTED_MODULE_12__.ButtonIcon, { marginEnd: iconSpacing, children: leftIcon }),
-      children,
-      rightIcon && /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_button_icon_mjs__WEBPACK_IMPORTED_MODULE_12__.ButtonIcon, { marginStart: iconSpacing, children: rightIcon })
-    ] });
-  }
-  return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", { style: { display: "contents" }, children: [
-    leftIcon && /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_button_icon_mjs__WEBPACK_IMPORTED_MODULE_12__.ButtonIcon, { marginEnd: iconSpacing, children: leftIcon }),
-    children,
-    rightIcon && /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_button_icon_mjs__WEBPACK_IMPORTED_MODULE_12__.ButtonIcon, { marginStart: iconSpacing, children: rightIcon })
-  ] });
-}
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@chakra-ui/react/dist/esm/button/icon-button.mjs":
-/*!***********************************************************************!*\
-  !*** ./node_modules/@chakra-ui/react/dist/esm/button/icon-button.mjs ***!
-  \***********************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   IconButton: () => (/* binding */ IconButton)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var _button_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./button.mjs */ "./node_modules/@chakra-ui/react/dist/esm/button/button.mjs");
-/* harmony import */ var _system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../system/forward-ref.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/forward-ref.mjs");
-'use client';
-
-
-
-
-
-const IconButton = (0,_system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_2__.forwardRef)(
-  (props, ref) => {
-    const { icon, children, isRound, "aria-label": ariaLabel, ...rest } = props;
-    const element = icon || children;
-    const _children = (0,react__WEBPACK_IMPORTED_MODULE_1__.isValidElement)(element) ? (0,react__WEBPACK_IMPORTED_MODULE_1__.cloneElement)(element, {
-      "aria-hidden": true,
-      focusable: false
-    }) : null;
-    return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(
-      _button_mjs__WEBPACK_IMPORTED_MODULE_3__.Button,
-      {
-        px: "0",
-        py: "0",
-        borderRadius: isRound ? "full" : void 0,
-        ref,
-        "aria-label": ariaLabel,
-        ...rest,
-        children: _children
-      }
-    );
-  }
-);
-IconButton.displayName = "IconButton";
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@chakra-ui/react/dist/esm/button/use-button-type.mjs":
-/*!***************************************************************************!*\
-  !*** ./node_modules/@chakra-ui/react/dist/esm/button/use-button-type.mjs ***!
-  \***************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   useButtonType: () => (/* binding */ useButtonType)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-'use client';
-
-
-function useButtonType(value) {
-  const [isButton, setIsButton] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(!value);
-  const refCallback = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)((node) => {
-    if (!node)
-      return;
-    setIsButton(node.tagName === "BUTTON");
-  }, []);
-  const type = isButton ? "button" : void 0;
-  return { ref: refCallback, type };
-}
 
 
 
@@ -2273,200 +1575,72 @@ EnvironmentProvider.displayName = "EnvironmentProvider";
 
 /***/ }),
 
-/***/ "./node_modules/@chakra-ui/react/dist/esm/flex/flex.mjs":
-/*!**************************************************************!*\
-  !*** ./node_modules/@chakra-ui/react/dist/esm/flex/flex.mjs ***!
-  \**************************************************************/
+/***/ "./node_modules/@chakra-ui/react/dist/esm/extend-theme/extend-theme.mjs":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@chakra-ui/react/dist/esm/extend-theme/extend-theme.mjs ***!
+  \******************************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Flex: () => (/* binding */ Flex)
+/* harmony export */   createExtendTheme: () => (/* binding */ createExtendTheme),
+/* harmony export */   extendBaseTheme: () => (/* binding */ extendBaseTheme),
+/* harmony export */   extendTheme: () => (/* binding */ extendTheme),
+/* harmony export */   mergeThemeOverride: () => (/* binding */ mergeThemeOverride)
 /* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var _system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../system/forward-ref.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/forward-ref.mjs");
-/* harmony import */ var _system_factory_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../system/factory.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/factory.mjs");
+/* harmony import */ var _chakra_ui_theme__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @chakra-ui/theme */ "./node_modules/@chakra-ui/theme/dist/esm/utils/is-chakra-theme.mjs");
+/* harmony import */ var _chakra_ui_theme__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @chakra-ui/theme */ "./node_modules/@chakra-ui/theme/dist/esm/index.mjs");
+/* harmony import */ var _chakra_ui_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @chakra-ui/utils */ "./node_modules/lodash.mergewith/index.js");
+/* harmony import */ var _chakra_ui_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @chakra-ui/utils */ "./node_modules/@chakra-ui/utils/dist/esm/is.mjs");
 'use client';
 
 
 
-
-const Flex = (0,_system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(function Flex2(props, ref) {
-  const { direction, align, justify, wrap, basis, grow, shrink, ...rest } = props;
-  const styles = {
-    display: "flex",
-    flexDirection: direction,
-    alignItems: align,
-    justifyContent: justify,
-    flexWrap: wrap,
-    flexBasis: basis,
-    flexGrow: grow,
-    flexShrink: shrink
+function isFunction(value) {
+  return typeof value === "function";
+}
+function pipe(...fns) {
+  return (v) => fns.reduce((a, b) => b(a), v);
+}
+const createExtendTheme = (theme2) => {
+  return function extendTheme2(...extensions) {
+    let overrides = [...extensions];
+    let activeTheme = extensions[extensions.length - 1];
+    if ((0,_chakra_ui_theme__WEBPACK_IMPORTED_MODULE_0__.isChakraTheme)(activeTheme) && // this ensures backward compatibility
+    // previously only `extendTheme(override, activeTheme?)` was allowed
+    overrides.length > 1) {
+      overrides = overrides.slice(0, overrides.length - 1);
+    } else {
+      activeTheme = theme2;
+    }
+    return pipe(
+      ...overrides.map(
+        (extension) => (prevTheme) => isFunction(extension) ? extension(prevTheme) : mergeThemeOverride(prevTheme, extension)
+      )
+    )(activeTheme);
   };
-  return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_system_factory_mjs__WEBPACK_IMPORTED_MODULE_2__.chakra.div, { ref, __css: styles, ...rest });
-});
-Flex.displayName = "Flex";
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@chakra-ui/react/dist/esm/grid/grid.mjs":
-/*!**************************************************************!*\
-  !*** ./node_modules/@chakra-ui/react/dist/esm/grid/grid.mjs ***!
-  \**************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Grid: () => (/* binding */ Grid)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var _system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../system/forward-ref.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/forward-ref.mjs");
-/* harmony import */ var _system_factory_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../system/factory.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/factory.mjs");
-'use client';
-
-
-
-
-const Grid = (0,_system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(function Grid2(props, ref) {
-  const {
-    templateAreas,
-    gap,
-    rowGap,
-    columnGap,
-    column,
-    row,
-    autoFlow,
-    autoRows,
-    templateRows,
-    autoColumns,
-    templateColumns,
-    ...rest
-  } = props;
-  const styles = {
-    display: "grid",
-    gridTemplateAreas: templateAreas,
-    gridGap: gap,
-    gridRowGap: rowGap,
-    gridColumnGap: columnGap,
-    gridAutoColumns: autoColumns,
-    gridColumn: column,
-    gridRow: row,
-    gridAutoFlow: autoFlow,
-    gridAutoRows: autoRows,
-    gridTemplateRows: templateRows,
-    gridTemplateColumns: templateColumns
-  };
-  return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_system_factory_mjs__WEBPACK_IMPORTED_MODULE_2__.chakra.div, { ref, __css: styles, ...rest });
-});
-Grid.displayName = "Grid";
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@chakra-ui/react/dist/esm/grid/simple-grid.mjs":
-/*!*********************************************************************!*\
-  !*** ./node_modules/@chakra-ui/react/dist/esm/grid/simple-grid.mjs ***!
-  \*********************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   SimpleGrid: () => (/* binding */ SimpleGrid)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var _chakra_ui_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @chakra-ui/utils */ "./node_modules/@chakra-ui/utils/dist/esm/responsive.mjs");
-/* harmony import */ var _grid_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./grid.mjs */ "./node_modules/@chakra-ui/react/dist/esm/grid/grid.mjs");
-/* harmony import */ var _system_use_theme_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../system/use-theme.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/use-theme.mjs");
-/* harmony import */ var _system_hooks_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../system/hooks.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/hooks.mjs");
-/* harmony import */ var _system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../system/forward-ref.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/forward-ref.mjs");
-'use client';
-
-
-
-
-
-
-
-const SimpleGrid = (0,_system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(
-  function SimpleGrid2(props, ref) {
-    const { columns, spacingX, spacingY, spacing, minChildWidth, ...rest } = props;
-    const theme = (0,_system_use_theme_mjs__WEBPACK_IMPORTED_MODULE_2__.useTheme)();
-    const templateColumns = minChildWidth ? widthToColumns(minChildWidth, theme) : countToColumns(columns);
-    return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(
-      _grid_mjs__WEBPACK_IMPORTED_MODULE_3__.Grid,
-      {
-        ref,
-        gap: spacing,
-        columnGap: spacingX,
-        rowGap: spacingY,
-        templateColumns,
-        ...rest
-      }
-    );
+};
+const extendTheme = createExtendTheme(_chakra_ui_theme__WEBPACK_IMPORTED_MODULE_1__.theme);
+const extendBaseTheme = createExtendTheme(_chakra_ui_theme__WEBPACK_IMPORTED_MODULE_1__.baseTheme);
+function mergeThemeOverride(...overrides) {
+  return _chakra_ui_utils__WEBPACK_IMPORTED_MODULE_2__({}, ...overrides, mergeThemeCustomizer);
+}
+function mergeThemeCustomizer(source, override, key, object) {
+  if ((isFunction(source) || isFunction(override)) && Object.prototype.hasOwnProperty.call(object, key)) {
+    return (...args) => {
+      const sourceValue = isFunction(source) ? source(...args) : source;
+      const overrideValue = isFunction(override) ? override(...args) : override;
+      return _chakra_ui_utils__WEBPACK_IMPORTED_MODULE_2__({}, sourceValue, overrideValue, mergeThemeCustomizer);
+    };
   }
-);
-SimpleGrid.displayName = "SimpleGrid";
-function toPx(n) {
-  return typeof n === "number" ? `${n}px` : n;
-}
-function widthToColumns(width, theme) {
-  return (0,_chakra_ui_utils__WEBPACK_IMPORTED_MODULE_4__.mapResponsive)(width, (value) => {
-    const _value = (0,_system_hooks_mjs__WEBPACK_IMPORTED_MODULE_5__.getToken)("sizes", value, toPx(value))(theme);
-    return value === null ? null : `repeat(auto-fit, minmax(${_value}, 1fr))`;
-  });
-}
-function countToColumns(count) {
-  return (0,_chakra_ui_utils__WEBPACK_IMPORTED_MODULE_4__.mapResponsive)(
-    count,
-    (value) => value === null ? null : `repeat(${value}, minmax(0, 1fr))`
-  );
-}
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@chakra-ui/react/dist/esm/icon/create-icon.mjs":
-/*!*********************************************************************!*\
-  !*** ./node_modules/@chakra-ui/react/dist/esm/icon/create-icon.mjs ***!
-  \*********************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   createIcon: () => (/* binding */ createIcon)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var _icon_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./icon.mjs */ "./node_modules/@chakra-ui/react/dist/esm/icon/icon.mjs");
-/* harmony import */ var _system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../system/forward-ref.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/forward-ref.mjs");
-'use client';
-
-
-
-
-
-function createIcon(options) {
-  const {
-    viewBox = "0 0 24 24",
-    d: pathDefinition,
-    displayName,
-    defaultProps = {}
-  } = options;
-  const path = react__WEBPACK_IMPORTED_MODULE_1__.Children.toArray(options.path);
-  const Comp = (0,_system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_2__.forwardRef)((props, ref) => /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_icon_mjs__WEBPACK_IMPORTED_MODULE_3__.Icon, { ref, viewBox, ...defaultProps, ...props, children: path.length ? path : /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { fill: "currentColor", d: pathDefinition }) }));
-  Comp.displayName = displayName;
-  return Comp;
+  if ((0,_chakra_ui_utils__WEBPACK_IMPORTED_MODULE_3__.isObject)(source) && (0,_chakra_ui_utils__WEBPACK_IMPORTED_MODULE_3__.isArray)(override)) {
+    return override;
+  }
+  if ((0,_chakra_ui_utils__WEBPACK_IMPORTED_MODULE_3__.isArray)(source) && (0,_chakra_ui_utils__WEBPACK_IMPORTED_MODULE_3__.isObject)(override)) {
+    return override;
+  }
+  return void 0;
 }
 
 
@@ -2556,210 +1730,6 @@ const Icon = (0,_system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_1__.forwardRef)
   return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_system_factory_mjs__WEBPACK_IMPORTED_MODULE_4__.chakra.svg, { verticalAlign: "middle", viewBox: _viewBox, ...shared, ...rest, children: _path });
 });
 Icon.displayName = "Icon";
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@chakra-ui/react/dist/esm/image/image.mjs":
-/*!****************************************************************!*\
-  !*** ./node_modules/@chakra-ui/react/dist/esm/image/image.mjs ***!
-  \****************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Image: () => (/* binding */ Image)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var _chakra_ui_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @chakra-ui/utils */ "./node_modules/@chakra-ui/utils/dist/esm/omit.mjs");
-/* harmony import */ var _native_image_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./native-image.mjs */ "./node_modules/@chakra-ui/react/dist/esm/image/native-image.mjs");
-/* harmony import */ var _use_image_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./use-image.mjs */ "./node_modules/@chakra-ui/react/dist/esm/image/use-image.mjs");
-/* harmony import */ var _system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../system/forward-ref.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/forward-ref.mjs");
-/* harmony import */ var _system_factory_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../system/factory.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/factory.mjs");
-'use client';
-
-
-
-
-
-
-
-const Image = (0,_system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(function Image2(props, ref) {
-  const {
-    fallbackSrc,
-    fallback,
-    src,
-    srcSet,
-    align,
-    fit,
-    loading,
-    ignoreFallback,
-    crossOrigin,
-    fallbackStrategy = "beforeLoadOrError",
-    referrerPolicy,
-    ...rest
-  } = props;
-  const providedFallback = fallbackSrc !== void 0 || fallback !== void 0;
-  const shouldIgnoreFallbackImage = loading != null || // use can opt out of fallback image
-  ignoreFallback || // if the user doesn't provide any kind of fallback we should ignore it
-  !providedFallback;
-  const status = (0,_use_image_mjs__WEBPACK_IMPORTED_MODULE_2__.useImage)({
-    ...props,
-    crossOrigin,
-    ignoreFallback: shouldIgnoreFallbackImage
-  });
-  const showFallbackImage = (0,_use_image_mjs__WEBPACK_IMPORTED_MODULE_2__.shouldShowFallbackImage)(status, fallbackStrategy);
-  const shared = {
-    ref,
-    objectFit: fit,
-    objectPosition: align,
-    ...shouldIgnoreFallbackImage ? rest : (0,_chakra_ui_utils__WEBPACK_IMPORTED_MODULE_3__.omit)(rest, ["onError", "onLoad"])
-  };
-  if (showFallbackImage) {
-    if (fallback)
-      return fallback;
-    return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(
-      _system_factory_mjs__WEBPACK_IMPORTED_MODULE_4__.chakra.img,
-      {
-        as: _native_image_mjs__WEBPACK_IMPORTED_MODULE_5__.NativeImage,
-        className: "chakra-image__placeholder",
-        src: fallbackSrc,
-        ...shared
-      }
-    );
-  }
-  return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(
-    _system_factory_mjs__WEBPACK_IMPORTED_MODULE_4__.chakra.img,
-    {
-      as: _native_image_mjs__WEBPACK_IMPORTED_MODULE_5__.NativeImage,
-      src,
-      srcSet,
-      crossOrigin,
-      loading,
-      referrerPolicy,
-      className: "chakra-image",
-      ...shared
-    }
-  );
-});
-Image.displayName = "Image";
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@chakra-ui/react/dist/esm/image/native-image.mjs":
-/*!***********************************************************************!*\
-  !*** ./node_modules/@chakra-ui/react/dist/esm/image/native-image.mjs ***!
-  \***********************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   NativeImage: () => (/* binding */ NativeImage)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var _system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../system/forward-ref.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/forward-ref.mjs");
-'use client';
-
-
-
-const NativeImage = (0,_system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(function NativeImage2(props, ref) {
-  const { htmlWidth, htmlHeight, alt, ...rest } = props;
-  return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("img", { width: htmlWidth, height: htmlHeight, ref, alt, ...rest });
-});
-NativeImage.displayName = "NativeImage";
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@chakra-ui/react/dist/esm/image/use-image.mjs":
-/*!********************************************************************!*\
-  !*** ./node_modules/@chakra-ui/react/dist/esm/image/use-image.mjs ***!
-  \********************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   shouldShowFallbackImage: () => (/* binding */ shouldShowFallbackImage),
-/* harmony export */   useImage: () => (/* binding */ useImage)
-/* harmony export */ });
-/* harmony import */ var _chakra_ui_hooks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @chakra-ui/hooks */ "./node_modules/@chakra-ui/hooks/dist/esm/use-safe-layout-effect.mjs");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-'use client';
-
-
-
-function useImage(props) {
-  const {
-    loading,
-    src,
-    srcSet,
-    onLoad,
-    onError,
-    crossOrigin,
-    sizes,
-    ignoreFallback
-  } = props;
-  const [status, setStatus] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("pending");
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    setStatus(src ? "loading" : "pending");
-  }, [src]);
-  const imageRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
-  const load = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(() => {
-    if (!src)
-      return;
-    flush();
-    const img = new Image();
-    img.src = src;
-    if (crossOrigin)
-      img.crossOrigin = crossOrigin;
-    if (srcSet)
-      img.srcset = srcSet;
-    if (sizes)
-      img.sizes = sizes;
-    if (loading)
-      img.loading = loading;
-    img.onload = (event) => {
-      flush();
-      setStatus("loaded");
-      onLoad?.(event);
-    };
-    img.onerror = (error) => {
-      flush();
-      setStatus("failed");
-      onError?.(error);
-    };
-    imageRef.current = img;
-  }, [src, crossOrigin, srcSet, sizes, onLoad, onError, loading]);
-  const flush = () => {
-    if (imageRef.current) {
-      imageRef.current.onload = null;
-      imageRef.current.onerror = null;
-      imageRef.current = null;
-    }
-  };
-  (0,_chakra_ui_hooks__WEBPACK_IMPORTED_MODULE_1__.useSafeLayoutEffect)(() => {
-    if (ignoreFallback)
-      return void 0;
-    if (status === "loading") {
-      load();
-    }
-    return () => {
-      flush();
-    };
-  }, [status, load, ignoreFallback]);
-  return ignoreFallback ? "loaded" : status;
-}
-const shouldShowFallbackImage = (status, fallbackStrategy) => status !== "loaded" && fallbackStrategy === "beforeLoadOrError" || status === "failed" && fallbackStrategy === "onError";
 
 
 
@@ -3531,75 +2501,6 @@ function useTheme() {
 
 /***/ }),
 
-/***/ "./node_modules/@chakra-ui/react/dist/esm/toast/create-toast-fn.mjs":
-/*!**************************************************************************!*\
-  !*** ./node_modules/@chakra-ui/react/dist/esm/toast/create-toast-fn.mjs ***!
-  \**************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   createToastFn: () => (/* binding */ createToastFn)
-/* harmony export */ });
-/* harmony import */ var _chakra_ui_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @chakra-ui/utils */ "./node_modules/@chakra-ui/utils/dist/esm/run-if-fn.mjs");
-/* harmony import */ var _toast_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./toast.mjs */ "./node_modules/@chakra-ui/react/dist/esm/toast/toast.mjs");
-/* harmony import */ var _toast_placement_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./toast.placement.mjs */ "./node_modules/@chakra-ui/react/dist/esm/toast/toast.placement.mjs");
-/* harmony import */ var _toast_store_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./toast.store.mjs */ "./node_modules/@chakra-ui/react/dist/esm/toast/toast.store.mjs");
-'use client';
-
-
-
-
-
-function createToastFn(dir, defaultOptions) {
-  const normalizeToastOptions = (options) => ({
-    ...defaultOptions,
-    ...options,
-    position: (0,_toast_placement_mjs__WEBPACK_IMPORTED_MODULE_0__.getToastPlacement)(
-      options?.position ?? defaultOptions?.position,
-      dir
-    )
-  });
-  const toast = (options) => {
-    const normalizedToastOptions = normalizeToastOptions(options);
-    const Message = (0,_toast_mjs__WEBPACK_IMPORTED_MODULE_1__.createRenderToast)(normalizedToastOptions);
-    return _toast_store_mjs__WEBPACK_IMPORTED_MODULE_2__.toastStore.notify(Message, normalizedToastOptions);
-  };
-  toast.update = (id, options) => {
-    _toast_store_mjs__WEBPACK_IMPORTED_MODULE_2__.toastStore.update(id, normalizeToastOptions(options));
-  };
-  toast.promise = (promise, options) => {
-    const id = toast({
-      ...options.loading,
-      status: "loading",
-      duration: null
-    });
-    promise.then(
-      (data) => toast.update(id, {
-        status: "success",
-        duration: 5e3,
-        ...(0,_chakra_ui_utils__WEBPACK_IMPORTED_MODULE_3__.runIfFn)(options.success, data)
-      })
-    ).catch(
-      (error) => toast.update(id, {
-        status: "error",
-        duration: 5e3,
-        ...(0,_chakra_ui_utils__WEBPACK_IMPORTED_MODULE_3__.runIfFn)(options.error, error)
-      })
-    );
-  };
-  toast.closeAll = _toast_store_mjs__WEBPACK_IMPORTED_MODULE_2__.toastStore.closeAll;
-  toast.close = _toast_store_mjs__WEBPACK_IMPORTED_MODULE_2__.toastStore.close;
-  toast.isActive = _toast_store_mjs__WEBPACK_IMPORTED_MODULE_2__.toastStore.isActive;
-  return toast;
-}
-
-
-
-
-/***/ }),
-
 /***/ "./node_modules/@chakra-ui/react/dist/esm/toast/toast.component.mjs":
 /*!**************************************************************************!*\
   !*** ./node_modules/@chakra-ui/react/dist/esm/toast/toast.component.mjs ***!
@@ -3827,35 +2728,6 @@ function createRenderToast(options = {}) {
     return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(ToastComponent, { ...props, ...options });
   };
   return renderToast;
-}
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@chakra-ui/react/dist/esm/toast/toast.placement.mjs":
-/*!**************************************************************************!*\
-  !*** ./node_modules/@chakra-ui/react/dist/esm/toast/toast.placement.mjs ***!
-  \**************************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   getToastPlacement: () => (/* binding */ getToastPlacement)
-/* harmony export */ });
-'use client';
-function getToastPlacement(position, dir) {
-  const computedPosition = position ?? "bottom";
-  const logicals = {
-    "top-start": { ltr: "top-left", rtl: "top-right" },
-    "top-end": { ltr: "top-right", rtl: "top-left" },
-    "bottom-start": { ltr: "bottom-left", rtl: "bottom-right" },
-    "bottom-end": { ltr: "bottom-right", rtl: "bottom-left" }
-  };
-  const logical = logicals[computedPosition];
-  return logical?.[dir] ?? computedPosition;
 }
 
 
@@ -4158,44 +3030,6 @@ function getToastListStyle(position) {
     right,
     left
   };
-}
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@chakra-ui/react/dist/esm/toast/use-toast.mjs":
-/*!********************************************************************!*\
-  !*** ./node_modules/@chakra-ui/react/dist/esm/toast/use-toast.mjs ***!
-  \********************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   useToast: () => (/* binding */ useToast)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var _create_toast_fn_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./create-toast-fn.mjs */ "./node_modules/@chakra-ui/react/dist/esm/toast/create-toast-fn.mjs");
-/* harmony import */ var _toast_provider_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./toast.provider.mjs */ "./node_modules/@chakra-ui/react/dist/esm/toast/toast.provider.mjs");
-/* harmony import */ var _system_hooks_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../system/hooks.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/hooks.mjs");
-'use client';
-
-
-
-
-
-function useToast(options) {
-  const { theme } = (0,_system_hooks_mjs__WEBPACK_IMPORTED_MODULE_1__.useChakra)();
-  const defaultOptions = (0,_toast_provider_mjs__WEBPACK_IMPORTED_MODULE_2__.useToastOptionContext)();
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(
-    () => (0,_create_toast_fn_mjs__WEBPACK_IMPORTED_MODULE_3__.createToastFn)(theme.direction, {
-      ...defaultOptions,
-      ...options
-    }),
-    [options, theme.direction, defaultOptions]
-  );
 }
 
 
@@ -12120,26 +10954,6 @@ function assignAfter(target, ...sources) {
 
 /***/ }),
 
-/***/ "./node_modules/@chakra-ui/utils/dist/esm/attr.mjs":
-/*!*********************************************************!*\
-  !*** ./node_modules/@chakra-ui/utils/dist/esm/attr.mjs ***!
-  \*********************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   ariaAttr: () => (/* binding */ ariaAttr),
-/* harmony export */   dataAttr: () => (/* binding */ dataAttr)
-/* harmony export */ });
-const dataAttr = (condition) => condition ? "" : void 0;
-const ariaAttr = (condition) => condition ? true : void 0;
-
-
-
-
-/***/ }),
-
 /***/ "./node_modules/@chakra-ui/utils/dist/esm/breakpoint.mjs":
 /*!***************************************************************!*\
   !*** ./node_modules/@chakra-ui/utils/dist/esm/breakpoint.mjs ***!
@@ -12615,76 +11429,6 @@ function pick(object, keysToPick) {
   }
   return result;
 }
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@chakra-ui/utils/dist/esm/responsive.mjs":
-/*!***************************************************************!*\
-  !*** ./node_modules/@chakra-ui/utils/dist/esm/responsive.mjs ***!
-  \***************************************************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   arrayToObjectNotation: () => (/* binding */ arrayToObjectNotation),
-/* harmony export */   breakpoints: () => (/* binding */ breakpoints),
-/* harmony export */   isCustomBreakpoint: () => (/* binding */ isCustomBreakpoint),
-/* harmony export */   isResponsiveObjectLike: () => (/* binding */ isResponsiveObjectLike),
-/* harmony export */   mapResponsive: () => (/* binding */ mapResponsive),
-/* harmony export */   objectToArrayNotation: () => (/* binding */ objectToArrayNotation)
-/* harmony export */ });
-/* harmony import */ var _is_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./is.mjs */ "./node_modules/@chakra-ui/utils/dist/esm/is.mjs");
-
-
-const breakpoints = Object.freeze([
-  "base",
-  "sm",
-  "md",
-  "lg",
-  "xl",
-  "2xl"
-]);
-function mapResponsive(prop, mapper) {
-  if (Array.isArray(prop)) {
-    return prop.map((item) => item === null ? null : mapper(item));
-  }
-  if ((0,_is_mjs__WEBPACK_IMPORTED_MODULE_0__.isObject)(prop)) {
-    return Object.keys(prop).reduce((result, key) => {
-      result[key] = mapper(prop[key]);
-      return result;
-    }, {});
-  }
-  if (prop != null) {
-    return mapper(prop);
-  }
-  return null;
-}
-function objectToArrayNotation(obj, bps = breakpoints) {
-  const result = bps.map((br) => obj[br] ?? null);
-  const lastItem = result[result.length - 1];
-  while (lastItem === null)
-    result.pop();
-  return result;
-}
-function arrayToObjectNotation(values, bps = breakpoints) {
-  const result = {};
-  values.forEach((value, index) => {
-    const key = bps[index];
-    if (value == null)
-      return;
-    result[key] = value;
-  });
-  return result;
-}
-function isResponsiveObjectLike(obj, bps = breakpoints) {
-  const keys = Object.keys(obj);
-  return keys.length > 0 && keys.every((key) => bps.includes(key));
-}
-const isCustomBreakpoint = (v) => Number.isNaN(Number(v));
 
 
 
@@ -30570,6 +29314,39 @@ const onNextFrame = typeof window !== "undefined"
 
 /***/ }),
 
+/***/ "./node_modules/react-dom/client.js":
+/*!******************************************!*\
+  !*** ./node_modules/react-dom/client.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var m = __webpack_require__(/*! react-dom */ "react-dom");
+if (false) {} else {
+  var i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+  exports.createRoot = function(c, o) {
+    i.usingClientEntryPoint = true;
+    try {
+      return m.createRoot(c, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+  exports.hydrateRoot = function(c, h, o) {
+    i.usingClientEntryPoint = true;
+    try {
+      return m.hydrateRoot(c, h, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/react-fast-compare/index.js":
 /*!**************************************************!*\
   !*** ./node_modules/react-fast-compare/index.js ***!
@@ -33996,17 +32773,6 @@ function __rewriteRelativeImportExtension(path, preserveJsx) {
 
 /***/ }),
 
-/***/ "@wordpress/element":
-/*!*********************************!*\
-  !*** external ["wp","element"] ***!
-  \*********************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = window["wp"]["element"];
-
-/***/ }),
-
 /***/ "react":
 /*!************************!*\
   !*** external "React" ***!
@@ -34125,30 +32891,110 @@ var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
 (() => {
 "use strict";
-/*!**********************************************!*\
-  !*** ./assets/js/src/react/wishlist-page.js ***!
-  \**********************************************/
+/*!**************************************!*\
+  !*** ./assets/js/src/admin/admin.js ***!
+  \**************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/chakra-provider.mjs");
-/* harmony import */ var _components_WishlistPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/WishlistPage */ "./assets/js/src/react/components/WishlistPage.jsx");
+/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
+/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/extend-theme/extend-theme.mjs");
+/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/box/box.mjs");
+/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/typography/heading.mjs");
+/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/alert/alert.mjs");
+/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/alert/alert-icon.mjs");
+/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/typography/text.mjs");
+/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/chakra-provider.mjs");
 
 
+ // New way to import createRoot for React 18+
 
 
+// 1. Optional: Extend the theme if you have specific brand colors or styles
+const theme = (0,_chakra_ui_react__WEBPACK_IMPORTED_MODULE_2__.extendTheme)({
+  colors: {
+    brand: {
+      900: '#1a365d',
+      // Dark blue
+      800: '#153e75',
+      700: '#2a69ac',
+      // Primary blue
+      50: '#e6f0ff' // Light blue for backgrounds or highlights
+    }
+    // You can also customize other theme aspects like fonts, breakpoints, etc.
+  }
+  // Example: Setting a global style for the body (though generally less needed with Chakra)
+  // styles: {
+  //   global: {
+  //     body: {
+  //       bg: 'gray.50', // A light gray background for the admin page
+  //     },
+  //   },
+  // },
+});
 
-// This is the entry point for the wishlist page
+// 2. Main App component
+const App = () => {
+  // Access data passed from PHP via wp_localize_script
+  const {
+    rest_url,
+    nonce
+  } = typeof wplsAdminData !== 'undefined' ? wplsAdminData : {
+    rest_url: 'N/A',
+    nonce: 'N/A'
+  };
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_3__.Box, {
+    p: 6,
+    borderWidth: "1px",
+    borderRadius: "lg",
+    boxShadow: "md",
+    bg: "white"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_4__.Heading, {
+    as: "h1",
+    size: "lg",
+    mb: 6,
+    color: "brand.700"
+  }, "Wishlist Simple Settings"), rest_url === 'N/A' ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_5__.Alert, {
+    status: "warning",
+    mb: 4
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_6__.AlertIcon, null), "PHP data (wplsAdminData) not found. Ensure wp_localize_script is working.") : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_5__.Alert, {
+    status: "success",
+    mb: 4,
+    variant: "subtle"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_6__.AlertIcon, null), "React app loaded successfully with Chakra UI!"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_3__.Box, {
+    mb: 4,
+    p: 4,
+    borderWidth: "1px",
+    borderRadius: "md",
+    bg: "gray.50"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_4__.Heading, {
+    as: "h4",
+    size: "sm",
+    mb: 2
+  }, "Developer Info:"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__.Text, {
+    fontSize: "sm"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "REST API URL:"), " ", rest_url), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__.Text, {
+    fontSize: "sm"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Nonce:"), " ", nonce ? 'Available' : 'Not Available'), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__.Text, {
+    fontSize: "sm"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Plugin URL (from PHP):"), " ", typeof wplsAdminData !== 'undefined' && wplsAdminData.plugin_url ? wplsAdminData.plugin_url : 'N/A')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__.Text, null, "This is the main container for the Wishlist Simple plugin settings. We will build the settings form here using Chakra UI components."));
+};
+
+// 3. Render the App component into the DOM
+// Ensure the DOM is fully loaded before trying to find the root element.
 document.addEventListener('DOMContentLoaded', () => {
-  const container = document.getElementById('wpls-wishlist-root');
-  if (container) {
-    (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.render)((0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_3__.ChakraProvider, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_WishlistPage__WEBPACK_IMPORTED_MODULE_2__["default"], null)), container);
+  const rootEl = document.getElementById('wpls-admin-app-root');
+  if (rootEl) {
+    const root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot)(rootEl); // Create a root.
+    root.render((0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)((react__WEBPACK_IMPORTED_MODULE_0___default().StrictMode), null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.ChakraProvider, {
+      theme: theme
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(App, null))));
+  } else {
+    console.error("WPLS Error: Could not find the root element '#wpls-admin-app-root'. Ensure it exists in your admin page HTML.");
   }
 });
 })();
 
 /******/ })()
 ;
-//# sourceMappingURL=wishlist-page.js.map
+//# sourceMappingURL=admin.js.map

@@ -4,8 +4,8 @@
   "description": "Assets for Wishlist Simple plugin",
   "main": "assets/js/src/react/index.js",
   "scripts": {
-    "build": "wp-scripts build assets/js/src/react/index.js assets/js/src/react/wishlist-page.js --output-path=assets/js/build",
-    "start": "wp-scripts start assets/js/src/react/index.js assets/js/src/react/wishlist-page.js --output-path=assets/js/build",
+    "build": "wp-scripts build assets/js/src/react/index.js assets/js/src/react/wishlist-page.js assets/js/src/admin/index.js --output-path=assets/js/build",
+    "start": "wp-scripts start assets/js/src/react/index.js assets/js/src/react/wishlist-page.js assets/js/src/admin/index.js --output-path=assets/js/build",
     "lint:js": "wp-scripts lint-js assets/js/src/**/*.js assets/js/src/**/*.jsx",
     "format:js": "wp-scripts format assets/js/src/**/*.js assets/js/src/**/*.jsx"
   },
