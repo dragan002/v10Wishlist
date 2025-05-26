@@ -1,0 +1,31 @@
+{
+  "name": "wishlist-simple-assets",
+  "version": "1.0.0",
+  "description": "Assets for Wishlist Simple plugin",
+  "main": "assets/js/src/react/index.js",
+  "scripts": {
+    "build": "wp-scripts build assets/js/src/react/index.js assets/js/src/react/wishlist-page.js --output-path=assets/js/build",
+    "start": "wp-scripts start assets/js/src/react/index.js assets/js/src/react/wishlist-page.js --output-path=assets/js/build",
+    "lint:js": "wp-scripts lint-js assets/js/src/**/*.js assets/js/src/**/*.jsx",
+    "format:js": "wp-scripts format assets/js/src/**/*.js assets/js/src/**/*.jsx"
+  },
+  "keywords": [
+    "wordpress",
+    "plugin",
+    "react"
+  ],
+  "author": "Your Name",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "@chakra-ui/icons": "^2.2.4",
+    "@chakra-ui/react": "^2.8.0",
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@wordpress/element": "^5.0.0",
+    "framer-motion": "^6.5.1",
+    "react-icons": "^5.5.0"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^27.0.0"
+  }
+}

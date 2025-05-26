@@ -1,0 +1,31 @@
+# Ignore all dotfiles except .gitignore
+.*
+!.gitignore
+
+# Dependency directories
+/node_modules
+/vendor
+
+# Build artifacts
+/dist
+/build
+
+# Composer
+/composer.lock
+
+# IDE and OS generated files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# WordPress specific cache and logs (if your plugin creates them)
+# /cache/
+# /logs/
+# /tmp/
+
+# Any potentially large or temporary files created by the plugin
+# For example, if your plugin uploads files somewhere inside its folder:
+# /my-plugin-uploads/
