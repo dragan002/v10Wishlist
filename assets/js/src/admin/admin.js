@@ -1328,11 +1328,21 @@ const AdminApp = () => {
                                       <Box w="60px" h="60px" bg="gray.200" borderRadius="md" />
                                       <Box flex={1}>
                                         <Text fontWeight="bold">Sample Product</Text>
+                                        {showProductDescription && (
+                                          <Text fontSize="sm" color="gray.600" noOfLines={1}>
+                                            High-quality product with amazing features...
+                                          </Text>
+                                        )}
                                         {showPrices && (
                                           <Text color={`${wishlistColorScheme}.500`} fontWeight="semibold">$29.99</Text>
                                         )}
                                         {showDateAdded && (
                                           <Text fontSize="sm" color="gray.500">Added: Jan 15, 2024</Text>
+                                        )}
+                                        {showStockStatus && (
+                                          <Badge colorScheme="green" variant="subtle" mt={1}>
+                                            In Stock
+                                          </Badge>
                                         )}
                                       </Box>
                                       <Button size="sm" colorScheme={wishlistColorScheme}>
@@ -1346,17 +1356,34 @@ const AdminApp = () => {
                                       <Box w="60px" h="60px" bg="gray.200" borderRadius="md" />
                                       <Box flex={1}>
                                         <Text fontWeight="bold">Another Product</Text>
+                                        {showProductDescription && (
+                                          <Text fontSize="sm" color="gray.600" noOfLines={1}>
+                                            Premium quality item perfect for daily use...
+                                          </Text>
+                                        )}
                                         {showPrices && (
                                           <Text color={`${wishlistColorScheme}.500`} fontWeight="semibold">$49.99</Text>
                                         )}
                                         {showDateAdded && (
                                           <Text fontSize="sm" color="gray.500">Added: Jan 12, 2024</Text>
                                         )}
+                                        {showStockStatus && (
+                                          <Badge colorScheme="red" variant="subtle" mt={1}>
+                                            Out of Stock
+                                          </Badge>
+                                        )}
                                       </Box>
-                                      <Button size="sm" colorScheme={wishlistColorScheme}>
+                                      <Button size="sm" colorScheme={wishlistColorScheme} isDisabled>
                                         Add to Cart
                                       </Button>
                                     </HStack>
+                                  </Box>
+
+                                  {/* Continue Shopping Button Preview */}
+                                  <Box mt={4} textAlign="center">
+                                    <Button variant="outline" colorScheme={wishlistColorScheme}>
+                                      {continueShoppingText}
+                                    </Button>
                                   </Box>
                                 </VStack>
                               </Box>

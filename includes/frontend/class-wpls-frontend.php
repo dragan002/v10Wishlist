@@ -358,6 +358,7 @@ class Wpls_Frontend
             'id'           => (int)$item->item_id,
             'product_id'   => (int)$item->product_id,
             'name'         => $product->get_name(),
+            'description'  => $product->get_short_description(),
             'price_html'   => $product->get_price_html(),
             'url'          => get_permalink($item->product_id),
             'image'        => $image_url,
