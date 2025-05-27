@@ -56,7 +56,7 @@ class Wpls_Admin
   {
 ?>
     <div class="wrap">
-      <div id="wpls-admin-app-root">
+      <div id="wpls-admin-root">
         <p><?php esc_html_e('Loading settings interface...', $this->text_domain); ?></p>
       </div>
     </div>

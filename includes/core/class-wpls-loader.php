@@ -16,26 +16,10 @@ if (! defined('ABSPATH')) {
 class Wpls_Loader
 {
 
-  /**
-   * The base directory for the namespace prefix.
-   *
-   * @var string
-   */
   private string $base_dir;
 
-  /**
-   * The namespace prefix for the classes.
-   *
-   * @var string
-   */
   private string $namespace_prefix;
 
-  /**
-   * Constructor.
-   *
-   * @param string $namespace_prefix The namespace prefix.
-   * @param string $base_dir The base directory for class files.
-   */
   public function __construct(string $namespace_prefix, string $base_dir)
   {
     $this->namespace_prefix = $namespace_prefix;

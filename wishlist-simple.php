@@ -62,6 +62,7 @@ function wpls_activate_wishlist_simple(): void
 register_activation_hook(__FILE__, 'wpls_activate_wishlist_simple');
 
 require_once WPLS_PLUGIN_DIR . 'includes/core/class-wpls-loader.php';
+require_once WPLS_PLUGIN_DIR . 'includes/api/class-wpls-api.php';
 
 $wpls_loader = new WishlistSimple\Core\Wpls_Loader('WishlistSimple\\', WPLS_PLUGIN_DIR . 'includes/');
 $wpls_loader->register();
@@ -132,7 +133,6 @@ if (!function_exists('wpls_get_current_user_or_guest_id')) {
   }
 }
 
-// Call it on 'init' hook to ensure cookie is set early if needed for a guest
 add_action('init', function () {
   // Only proceed if ALL these conditions are true:
   if (

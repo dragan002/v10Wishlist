@@ -8,12 +8,6 @@ if (! defined('ABSPATH')) {
   exit; // Exit if accessed directly.
 }
 
-/**
- * Wpls_Core Class.
- *
- * The main class for the WishlistSimple plugin.
- * Responsible for initializing the plugin and loading its components.
- */
 final class Wpls_Core
 {
 
@@ -44,6 +38,9 @@ final class Wpls_Core
 
   private function init_components(): void
   {
+    // Initialize API endpoints
+    new \WishlistSimple\Api\Wpls_Api();
+
     if (is_admin()) {
       $admin = new \WishlistSimple\Admin\Wpls_Admin(
         $this->version,

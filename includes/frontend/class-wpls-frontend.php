@@ -39,8 +39,8 @@ class Wpls_Frontend
 
     // Conditional hooks for display and scripts, only on actual frontend pages
     if (!is_admin()) {
-      // Hook to add the "Add to Wishlist" button
-      add_action('woocommerce_single_product_summary', [$this, 'display_add_to_wishlist_button'], 31);
+      add_action('wp', [$this, 'setup_button_position']);
+
       // Enqueue jQuery-based frontend scripts (for the button click)
       add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts_for_the_ajax_call']);
       // Enqueue React-based scripts (for the counter)
@@ -107,26 +107,115 @@ class Wpls_Frontend
   {
     global $product;
 
+
     if (!$product || !is_a($product, 'WC_Product')) {
       return;
     }
 
+    // Get button settings from admin
+    $settings = get_option('wpls_button_settings', [
+      'button_text' => 'Add to Wishlist',
+      'button_color' => '#667eea',
+      'button_position' => 'before_cart',
+      'animation_style' => 'bounce',
+      'is_enabled' => true
+    ]);
+
+    // Don't show button if disabled
+    if (!$settings['is_enabled']) {
+      return;
+    }
+
     $product_id = $product->get_id();
-    $user_id = get_current_user_id();
+    $user_id = wpls_get_current_user_or_guest_id();
 
     // Check if product is in wishlist
     $in_wishlist = \WishlistSimple\Core\Wpls_Database::is_product_in_wishlist($product_id, $user_id);
+
+    $button_text = $in_wishlist ? __('View Wishlist', 'wishlist-simple') : esc_html($settings['button_text']);
+    $button_color = esc_attr($settings['button_color']);
+    $animation_class = 'wpls-animation-' . esc_attr($settings['animation_style']);
 
 ?>
     <div class="wpls-add-to-wishlist-container">
       <button
         type="button"
-        class="button wpls-add-to-wishlist-button <?php echo $in_wishlist ? 'added-to-wishlist' : ''; ?>"
+        class="button wpls-add-to-wishlist-button <?php echo $in_wishlist ? 'added-to-wishlist' : ''; ?> <?php echo esc_attr($animation_class); ?>"
         id="wpls-add-to-wishlist-button-<?php echo esc_attr($product_id); ?>"
-        data-product-id="<?php echo esc_attr($product_id); ?>">
-        <?php echo $in_wishlist ? esc_html__('View Wishlist', 'wishlist-simple') : esc_html__('Add to Wishlist', 'wishlist-simple'); ?>
+        data-product-id="<?php echo esc_attr($product_id); ?>"
+        style="background-color: <?php echo $button_color; ?>; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; transition: all 0.3s ease;">
+        <?php echo $button_text; ?>
       </button>
     </div>
+
+    <style>
+      .wpls-add-to-wishlist-button:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+      }
+
+      .wpls-animation-bounce:hover {
+        animation: wpls-bounce 0.6s ease;
+      }
+
+      .wpls-animation-fade:hover {
+        animation: wpls-fade 0.6s ease;
+      }
+
+      .wpls-animation-slide:hover {
+        animation: wpls-slide 0.6s ease;
+      }
+
+      @keyframes wpls-bounce {
+
+        0%,
+        20%,
+        60%,
+        100% {
+          transform: translateY(0);
+        }
+
+        40% {
+          transform: translateY(-10px);
+        }
+
+        80% {
+          transform: translateY(-5px);
+        }
+      }
+
+      @keyframes wpls-fade {
+        0% {
+          opacity: 1;
+        }
+
+        50% {
+          opacity: 0.7;
+        }
+
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes wpls-slide {
+        0% {
+          transform: translateX(0);
+        }
+
+        25% {
+          transform: translateX(-5px);
+        }
+
+        75% {
+          transform: translateX(5px);
+        }
+
+        100% {
+          transform: translateX(0);
+        }
+      }
+    </style>
 <?php
   }
 
@@ -345,6 +434,67 @@ class Wpls_Frontend
       wp_send_json_error([
         'message' => __('Failed to clear wishlist', 'wishlist-simple'),
       ]);
+    }
+  }
+
+  public function setup_button_position(): void
+  {
+    // Remove any existing hooks first
+    remove_action('woocommerce_before_single_product_summary', [$this, 'display_add_to_wishlist_button']);
+    remove_action('woocommerce_single_product_summary', [$this, 'display_add_to_wishlist_button'], 5);
+    remove_action('woocommerce_single_product_summary', [$this, 'display_add_to_wishlist_button'], 15);
+    remove_action('woocommerce_before_add_to_cart_form', [$this, 'display_add_to_wishlist_button']);
+    remove_action('woocommerce_before_add_to_cart_button', [$this, 'display_add_to_wishlist_button']);
+    remove_action('woocommerce_after_add_to_cart_button', [$this, 'display_add_to_wishlist_button']);
+    remove_action('woocommerce_after_add_to_cart_form', [$this, 'display_add_to_wishlist_button']);
+
+    $settings = get_option('wpls_button_settings', [
+      'button_position' => 'before_add_to_cart_button'
+    ]);
+
+    $position = $settings['button_position'];
+
+    error_log('WPLS Debug: Button position setting = ' . $position);
+
+    switch ($position) {
+      case 'before_single_product_summary':
+        error_log('WPLS Debug: Adding button BEFORE product summary');
+        add_action('woocommerce_before_single_product_summary', [$this, 'display_add_to_wishlist_button']);
+        break;
+
+      case 'single_product_summary_5':
+        error_log('WPLS Debug: Adding button in product summary (priority 5)');
+        add_action('woocommerce_single_product_summary', [$this, 'display_add_to_wishlist_button'], 5);
+        break;
+
+      case 'single_product_summary_15':
+        error_log('WPLS Debug: Adding button in product summary (priority 15)');
+        add_action('woocommerce_single_product_summary', [$this, 'display_add_to_wishlist_button'], 15);
+        break;
+
+      case 'before_add_to_cart_form':
+        error_log('WPLS Debug: Adding button BEFORE add to cart form');
+        add_action('woocommerce_before_add_to_cart_form', [$this, 'display_add_to_wishlist_button']);
+        break;
+
+      case 'before_add_to_cart_button':
+        error_log('WPLS Debug: Adding button LEFT SIDE of add to cart button');
+        add_action('woocommerce_before_add_to_cart_button', [$this, 'display_add_to_wishlist_button']);
+        break;
+
+      case 'after_add_to_cart_button':
+        error_log('WPLS Debug: Adding button RIGHT SIDE of add to cart button');
+        add_action('woocommerce_after_add_to_cart_button', [$this, 'display_add_to_wishlist_button']);
+        break;
+
+      case 'after_add_to_cart_form':
+        error_log('WPLS Debug: Adding button AFTER add to cart form');
+        add_action('woocommerce_after_add_to_cart_form', [$this, 'display_add_to_wishlist_button']);
+        break;
+
+      default:
+        error_log('WPLS Debug: Using DEFAULT position (left side of add to cart button)');
+        add_action('woocommerce_before_add_to_cart_button', [$this, 'display_add_to_wishlist_button']);
     }
   }
 }
