@@ -315,6 +315,15 @@ const AdminApp = () => {
   const [buttonPosition, setButtonPosition] = useState('before_cart');
   const [animationStyle, setAnimationStyle] = useState('bounce');
   const [isLoadingSettings, setIsLoadingSettings] = useState(true);
+  const [fontColor, setFontColor] = useState('#ffffff');
+  const [fontSize, setFontSize] = useState('16');
+  const [buttonPadding, setButtonPadding] = useState('12');
+  const [buttonMargin, setButtonMargin] = useState('10');
+  const [buttonBorderRadius, setButtonBorderRadius] = useState('6');
+  const [buttonBorderWidth, setButtonBorderWidth] = useState('0');
+  const [buttonBorderColor, setButtonBorderColor] = useState('#000000');
+  const [showIcon, setShowIcon] = useState(true);
+  const [iconPosition, setIconPosition] = useState('left');
 
   const { colorMode, toggleColorMode } = useColorMode();
   const toast = useToast();
@@ -352,6 +361,15 @@ const AdminApp = () => {
         setButtonPosition(data.button_position || 'before_cart');
         setAnimationStyle(data.animation_style || 'bounce');
         setIsEnabled(data.is_enabled !== false);
+        setFontColor(data.font_color || '#ffffff');
+        setFontSize(data.font_size || '16');
+        setButtonPadding(data.button_padding || '12');
+        setButtonMargin(data.button_margin || '10');
+        setButtonBorderRadius(data.border_radius || '6');
+        setButtonBorderWidth(data.border_width || '0');
+        setButtonBorderColor(data.border_color || '#000000');
+        setShowIcon(data.show_icon !== false);
+        setIconPosition(data.icon_position || 'left');
       }
     } catch (error) {
       console.error('Failed to load settings:', error);
@@ -394,6 +412,15 @@ const AdminApp = () => {
           button_position: buttonPosition,
           animation_style: animationStyle,
           is_enabled: isEnabled,
+          font_color: fontColor,
+          font_size: fontSize,
+          button_padding: buttonPadding,
+          button_margin: buttonMargin,
+          border_radius: buttonBorderRadius,
+          border_width: buttonBorderWidth,
+          border_color: buttonBorderColor,
+          show_icon: showIcon,
+          icon_position: iconPosition,
         }),
       });
 
@@ -779,6 +806,159 @@ const AdminApp = () => {
                                   </Stack>
                                 </RadioGroup>
                               </FormControl>
+
+                              <FormControl>
+                                <FormLabel fontWeight="semibold">Font Color</FormLabel>
+                                <HStack>
+                                  <Input
+                                    type="color"
+                                    value={fontColor}
+                                    onChange={(e) => setFontColor(e.target.value)}
+                                    w="80px"
+                                    h="50px"
+                                    borderRadius="lg"
+                                    cursor="pointer"
+                                  />
+                                  <Input
+                                    value={fontColor}
+                                    onChange={(e) => setFontColor(e.target.value)}
+                                    placeholder="#ffffff"
+                                    size="lg"
+                                    borderRadius="lg"
+                                  />
+                                </HStack>
+                              </FormControl>
+
+                              <FormControl>
+                                <FormLabel fontWeight="semibold">Font Size (px)</FormLabel>
+                                <NumberInput
+                                  value={fontSize}
+                                  onChange={(value) => setFontSize(value)}
+                                  min={10}
+                                  max={32}
+                                  size="lg"
+                                >
+                                  <NumberInputField borderRadius="lg" />
+                                  <NumberInputStepper>
+                                    <NumberIncrementStepper />
+                                    <NumberDecrementStepper />
+                                  </NumberInputStepper>
+                                </NumberInput>
+                              </FormControl>
+
+                              <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
+                                <FormControl>
+                                  <FormLabel fontWeight="semibold">Padding (px)</FormLabel>
+                                  <NumberInput
+                                    value={buttonPadding}
+                                    onChange={(value) => setButtonPadding(value)}
+                                    min={0}
+                                    max={50}
+                                    size="lg"
+                                  >
+                                    <NumberInputField borderRadius="lg" />
+                                    <NumberInputStepper>
+                                      <NumberIncrementStepper />
+                                      <NumberDecrementStepper />
+                                    </NumberInputStepper>
+                                  </NumberInput>
+                                </FormControl>
+
+                                <FormControl>
+                                  <FormLabel fontWeight="semibold">Margin (px)</FormLabel>
+                                  <NumberInput
+                                    value={buttonMargin}
+                                    onChange={(value) => setButtonMargin(value)}
+                                    min={0}
+                                    max={50}
+                                    size="lg"
+                                  >
+                                    <NumberInputField borderRadius="lg" />
+                                    <NumberInputStepper>
+                                      <NumberIncrementStepper />
+                                      <NumberDecrementStepper />
+                                    </NumberInputStepper>
+                                  </NumberInput>
+                                </FormControl>
+                              </SimpleGrid>
+
+                              <SimpleGrid columns={{ base: 1, md: 3 }} spacing={4}>
+                                <FormControl>
+                                  <FormLabel fontWeight="semibold">Border Radius (px)</FormLabel>
+                                  <NumberInput
+                                    value={buttonBorderRadius}
+                                    onChange={(value) => setButtonBorderRadius(value)}
+                                    min={0}
+                                    max={50}
+                                    size="lg"
+                                  >
+                                    <NumberInputField borderRadius="lg" />
+                                    <NumberInputStepper>
+                                      <NumberIncrementStepper />
+                                      <NumberDecrementStepper />
+                                    </NumberInputStepper>
+                                  </NumberInput>
+                                </FormControl>
+
+                                <FormControl>
+                                  <FormLabel fontWeight="semibold">Border Width (px)</FormLabel>
+                                  <NumberInput
+                                    value={buttonBorderWidth}
+                                    onChange={(value) => setButtonBorderWidth(value)}
+                                    min={0}
+                                    max={10}
+                                    size="lg"
+                                  >
+                                    <NumberInputField borderRadius="lg" />
+                                    <NumberInputStepper>
+                                      <NumberIncrementStepper />
+                                      <NumberDecrementStepper />
+                                    </NumberInputStepper>
+                                  </NumberInput>
+                                </FormControl>
+
+                                <FormControl>
+                                  <FormLabel fontWeight="semibold">Border Color</FormLabel>
+                                  <Input
+                                    type="color"
+                                    value={buttonBorderColor}
+                                    onChange={(e) => setButtonBorderColor(e.target.value)}
+                                    size="lg"
+                                    borderRadius="lg"
+                                    cursor="pointer"
+                                  />
+                                </FormControl>
+                              </SimpleGrid>
+
+                              <FormControl>
+                                <FormLabel fontWeight="semibold">Icon Settings</FormLabel>
+                                <VStack spacing={3} align="stretch">
+                                  <Flex justify="space-between" align="center">
+                                    <Text>Show Heart Icon</Text>
+                                    <Switch
+                                      isChecked={showIcon}
+                                      onChange={(e) => setShowIcon(e.target.checked)}
+                                      colorScheme="blue"
+                                      size="lg"
+                                    />
+                                  </Flex>
+
+                                  {showIcon && (
+                                    <FormControl>
+                                      <FormLabel fontSize="sm">Icon Position</FormLabel>
+                                      <RadioGroup
+                                        value={iconPosition}
+                                        onChange={setIconPosition}
+                                      >
+                                        <Stack direction="row" spacing={4}>
+                                          <Radio value="left">Left</Radio>
+                                          <Radio value="right">Right</Radio>
+                                        </Stack>
+                                      </RadioGroup>
+                                    </FormControl>
+                                  )}
+                                </VStack>
+                              </FormControl>
                             </VStack>
 
                             <Box>
@@ -794,16 +974,22 @@ const AdminApp = () => {
                                 <Text fontSize="sm" color="gray.500" mb={4}>Product Page Preview</Text>
                                 <Button
                                   bg={buttonColor}
-                                  color="white"
+                                  color={fontColor}
+                                  fontSize={`${fontSize}px`}
+                                  padding={`${buttonPadding}px`}
+                                  margin={`${buttonMargin}px`}
+                                  borderRadius={`${buttonBorderRadius}px`}
+                                  border={buttonBorderWidth > 0 ? `${buttonBorderWidth}px solid ${buttonBorderColor}` : 'none'}
+                                  leftIcon={showIcon && iconPosition === 'left' ? <FiHeart /> : undefined}
+                                  rightIcon={showIcon && iconPosition === 'right' ? <FiHeart /> : undefined}
                                   size="lg"
-                                  borderRadius="lg"
-                                  leftIcon={<FiHeart />}
                                   _hover={{
                                     transform: 'translateY(-2px)',
                                     boxShadow: 'lg',
                                     opacity: 0.9
                                   }}
                                   transition="all 0.2s"
+                                  className={`wpls-animation-${animationStyle}`}
                                 >
                                   {buttonText}
                                 </Button>
@@ -1087,16 +1273,22 @@ const AdminApp = () => {
                     <Text color="gray.600" mb={6}>$299.99</Text>
                     <Button
                       bg={buttonColor}
-                      color="white"
+                      color={fontColor}
+                      fontSize={`${fontSize}px`}
+                      padding={`${buttonPadding}px`}
+                      margin={`${buttonMargin}px`}
+                      borderRadius={`${buttonBorderRadius}px`}
+                      border={buttonBorderWidth > 0 ? `${buttonBorderWidth}px solid ${buttonBorderColor}` : 'none'}
+                      leftIcon={showIcon && iconPosition === 'left' ? <FiHeart /> : undefined}
+                      rightIcon={showIcon && iconPosition === 'right' ? <FiHeart /> : undefined}
                       size="lg"
-                      borderRadius="lg"
-                      leftIcon={<FiHeart />}
                       _hover={{
                         transform: 'translateY(-2px)',
                         boxShadow: 'lg',
                         opacity: 0.9
                       }}
                       transition="all 0.2s"
+                      className={`wpls-animation-${animationStyle}`}
                     >
                       {buttonText}
                     </Button>

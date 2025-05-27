@@ -56596,9 +56596,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/radio/radio-group.mjs");
 /* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/stack/stack.mjs");
 /* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/radio/radio.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/divider/divider.mjs");
+/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/number-input/number-input.mjs");
 /* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/switch/switch.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/number-input/number-input.mjs");
+/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/divider/divider.mjs");
 /* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/spinner/spinner.mjs");
 /* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/stat/stat.mjs");
 /* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/stat/stat-label.mjs");
@@ -56837,6 +56837,15 @@ const AdminApp = () => {
   const [buttonPosition, setButtonPosition] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('before_cart');
   const [animationStyle, setAnimationStyle] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('bounce');
   const [isLoadingSettings, setIsLoadingSettings] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+  const [fontColor, setFontColor] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('#ffffff');
+  const [fontSize, setFontSize] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('16');
+  const [buttonPadding, setButtonPadding] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('12');
+  const [buttonMargin, setButtonMargin] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('10');
+  const [buttonBorderRadius, setButtonBorderRadius] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('6');
+  const [buttonBorderWidth, setButtonBorderWidth] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('0');
+  const [buttonBorderColor, setButtonBorderColor] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('#000000');
+  const [showIcon, setShowIcon] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+  const [iconPosition, setIconPosition] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('left');
   const {
     colorMode,
     toggleColorMode
@@ -56884,6 +56893,15 @@ const AdminApp = () => {
         setButtonPosition(data.button_position || 'before_cart');
         setAnimationStyle(data.animation_style || 'bounce');
         setIsEnabled(data.is_enabled !== false);
+        setFontColor(data.font_color || '#ffffff');
+        setFontSize(data.font_size || '16');
+        setButtonPadding(data.button_padding || '12');
+        setButtonMargin(data.button_margin || '10');
+        setButtonBorderRadius(data.border_radius || '6');
+        setButtonBorderWidth(data.border_width || '0');
+        setButtonBorderColor(data.border_color || '#000000');
+        setShowIcon(data.show_icon !== false);
+        setIconPosition(data.icon_position || 'left');
       }
     } catch (error) {
       console.error('Failed to load settings:', error);
@@ -56922,7 +56940,16 @@ const AdminApp = () => {
           button_color: buttonColor,
           button_position: buttonPosition,
           animation_style: animationStyle,
-          is_enabled: isEnabled
+          is_enabled: isEnabled,
+          font_color: fontColor,
+          font_size: fontSize,
+          button_padding: buttonPadding,
+          button_margin: buttonMargin,
+          border_radius: buttonBorderRadius,
+          border_width: buttonBorderWidth,
+          border_color: buttonBorderColor,
+          show_icon: showIcon,
+          icon_position: iconPosition
         })
       });
       const data = await response.json();
@@ -57392,7 +57419,119 @@ const AdminApp = () => {
     value: "slide"
   }, "Slide"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_50__.Radio, {
     value: "none"
-  }, "None"))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Box, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+  }, "None")))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_44__.FormControl, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_45__.FormLabel, {
+    fontWeight: "semibold"
+  }, "Font Color"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_10__.HStack, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_46__.Input, {
+    type: "color",
+    value: fontColor,
+    onChange: e => setFontColor(e.target.value),
+    w: "80px",
+    h: "50px",
+    borderRadius: "lg",
+    cursor: "pointer"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_46__.Input, {
+    value: fontColor,
+    onChange: e => setFontColor(e.target.value),
+    placeholder: "#ffffff",
+    size: "lg",
+    borderRadius: "lg"
+  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_44__.FormControl, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_45__.FormLabel, {
+    fontWeight: "semibold"
+  }, "Font Size (px)"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberInput, {
+    value: fontSize,
+    onChange: value => setFontSize(value),
+    min: 10,
+    max: 32,
+    size: "lg"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberInputField, {
+    borderRadius: "lg"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberInputStepper, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberIncrementStepper, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberDecrementStepper, null)))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_35__.SimpleGrid, {
+    columns: {
+      base: 1,
+      md: 2
+    },
+    spacing: 4
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_44__.FormControl, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_45__.FormLabel, {
+    fontWeight: "semibold"
+  }, "Padding (px)"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberInput, {
+    value: buttonPadding,
+    onChange: value => setButtonPadding(value),
+    min: 0,
+    max: 50,
+    size: "lg"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberInputField, {
+    borderRadius: "lg"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberInputStepper, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberIncrementStepper, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberDecrementStepper, null)))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_44__.FormControl, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_45__.FormLabel, {
+    fontWeight: "semibold"
+  }, "Margin (px)"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberInput, {
+    value: buttonMargin,
+    onChange: value => setButtonMargin(value),
+    min: 0,
+    max: 50,
+    size: "lg"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberInputField, {
+    borderRadius: "lg"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberInputStepper, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberIncrementStepper, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberDecrementStepper, null))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_35__.SimpleGrid, {
+    columns: {
+      base: 1,
+      md: 3
+    },
+    spacing: 4
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_44__.FormControl, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_45__.FormLabel, {
+    fontWeight: "semibold"
+  }, "Border Radius (px)"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberInput, {
+    value: buttonBorderRadius,
+    onChange: value => setButtonBorderRadius(value),
+    min: 0,
+    max: 50,
+    size: "lg"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberInputField, {
+    borderRadius: "lg"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberInputStepper, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberIncrementStepper, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberDecrementStepper, null)))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_44__.FormControl, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_45__.FormLabel, {
+    fontWeight: "semibold"
+  }, "Border Width (px)"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberInput, {
+    value: buttonBorderWidth,
+    onChange: value => setButtonBorderWidth(value),
+    min: 0,
+    max: 10,
+    size: "lg"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberInputField, {
+    borderRadius: "lg"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberInputStepper, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberIncrementStepper, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberDecrementStepper, null)))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_44__.FormControl, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_45__.FormLabel, {
+    fontWeight: "semibold"
+  }, "Border Color"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_46__.Input, {
+    type: "color",
+    value: buttonBorderColor,
+    onChange: e => setButtonBorderColor(e.target.value),
+    size: "lg",
+    borderRadius: "lg",
+    cursor: "pointer"
+  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_44__.FormControl, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_45__.FormLabel, {
+    fontWeight: "semibold"
+  }, "Icon Settings"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_43__.VStack, {
+    spacing: 3,
+    align: "stretch"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_9__.Flex, {
+    justify: "space-between",
+    align: "center"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, null, "Show Heart Icon"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_52__.Switch, {
+    isChecked: showIcon,
+    onChange: e => setShowIcon(e.target.checked),
+    colorScheme: "blue",
+    size: "lg"
+  })), showIcon && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_44__.FormControl, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_45__.FormLabel, {
+    fontSize: "sm"
+  }, "Icon Position"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_48__.RadioGroup, {
+    value: iconPosition,
+    onChange: setIconPosition
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_49__.Stack, {
+    direction: "row",
+    spacing: 4
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_50__.Radio, {
+    value: "left"
+  }, "Left"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_50__.Radio, {
+    value: "right"
+  }, "Right"))))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Box, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
     fontWeight: "semibold",
     mb: 4
   }, "Live Preview"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Box, {
@@ -57408,16 +57547,22 @@ const AdminApp = () => {
     mb: 4
   }, "Product Page Preview"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_21__.Button, {
     bg: buttonColor,
-    color: "white",
+    color: fontColor,
+    fontSize: `${fontSize}px`,
+    padding: `${buttonPadding}px`,
+    margin: `${buttonMargin}px`,
+    borderRadius: `${buttonBorderRadius}px`,
+    border: buttonBorderWidth > 0 ? `${buttonBorderWidth}px solid ${buttonBorderColor}` : 'none',
+    leftIcon: showIcon && iconPosition === 'left' ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_icons_fi__WEBPACK_IMPORTED_MODULE_13__.FiHeart, null) : undefined,
+    rightIcon: showIcon && iconPosition === 'right' ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_icons_fi__WEBPACK_IMPORTED_MODULE_13__.FiHeart, null) : undefined,
     size: "lg",
-    borderRadius: "lg",
-    leftIcon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_icons_fi__WEBPACK_IMPORTED_MODULE_13__.FiHeart, null),
     _hover: {
       transform: 'translateY(-2px)',
       boxShadow: 'lg',
       opacity: 0.9
     },
-    transition: "all 0.2s"
+    transition: "all 0.2s",
+    className: `wpls-animation-${animationStyle}`
   }, buttonText), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
     fontSize: "xs",
     color: "gray.400",
@@ -57435,7 +57580,7 @@ const AdminApp = () => {
   }, "\uD83D\uDCA1 Pro Tip"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
     fontSize: "sm",
     color: "blue.600"
-  }, "Use contrasting colors to make your wishlist button stand out and increase click-through rates."))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.Divider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Box, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_15__.Heading, {
+  }, "Use contrasting colors to make your wishlist button stand out and increase click-through rates."))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_53__.Divider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Box, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_15__.Heading, {
     size: "md",
     mb: 6
   }, "Advanced Settings"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_35__.SimpleGrid, {
@@ -57461,12 +57606,12 @@ const AdminApp = () => {
     mt: 1
   }, "Toggle wishlist functionality on/off")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_44__.FormControl, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_45__.FormLabel, {
     fontWeight: "semibold"
-  }, "Cache Duration"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_53__.NumberInput, {
+  }, "Cache Duration"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberInput, {
     value: sliderValue,
     onChange: value => setSliderValue(value),
     min: 5,
     max: 120
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_53__.NumberInputField, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_53__.NumberInputStepper, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_53__.NumberIncrementStepper, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_53__.NumberDecrementStepper, null))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberInputField, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberInputStepper, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberIncrementStepper, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberDecrementStepper, null))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
     fontSize: "sm",
     color: "gray.500",
     mt: 1
@@ -57706,16 +57851,22 @@ const AdminApp = () => {
     mb: 6
   }, "$299.99"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_21__.Button, {
     bg: buttonColor,
-    color: "white",
+    color: fontColor,
+    fontSize: `${fontSize}px`,
+    padding: `${buttonPadding}px`,
+    margin: `${buttonMargin}px`,
+    borderRadius: `${buttonBorderRadius}px`,
+    border: buttonBorderWidth > 0 ? `${buttonBorderWidth}px solid ${buttonBorderColor}` : 'none',
+    leftIcon: showIcon && iconPosition === 'left' ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_icons_fi__WEBPACK_IMPORTED_MODULE_13__.FiHeart, null) : undefined,
+    rightIcon: showIcon && iconPosition === 'right' ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_icons_fi__WEBPACK_IMPORTED_MODULE_13__.FiHeart, null) : undefined,
     size: "lg",
-    borderRadius: "lg",
-    leftIcon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_icons_fi__WEBPACK_IMPORTED_MODULE_13__.FiHeart, null),
     _hover: {
       transform: 'translateY(-2px)',
       boxShadow: 'lg',
       opacity: 0.9
     },
-    transition: "all 0.2s"
+    transition: "all 0.2s",
+    className: `wpls-animation-${animationStyle}`
   }, buttonText)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_35__.SimpleGrid, {
     columns: 2,
     spacing: 4,
@@ -57807,11 +57958,11 @@ const AdminApp = () => {
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
     fontSize: "sm",
     color: "gray.500"
-  }, "Prevent spam requests")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_44__.FormControl, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_45__.FormLabel, null, "Max Requests per Hour"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_53__.NumberInput, {
+  }, "Prevent spam requests")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_44__.FormControl, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_45__.FormLabel, null, "Max Requests per Hour"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberInput, {
     defaultValue: 100,
     min: 10,
     max: 1000
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_53__.NumberInputField, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_53__.NumberInputStepper, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_53__.NumberIncrementStepper, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_53__.NumberDecrementStepper, null))))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_79__.AccordionItem, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_80__.AccordionButton, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Box, {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberInputField, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberInputStepper, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberIncrementStepper, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_51__.NumberDecrementStepper, null))))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_79__.AccordionItem, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_80__.AccordionButton, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Box, {
     flex: "1",
     textAlign: "left",
     fontWeight: "semibold"

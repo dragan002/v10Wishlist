@@ -36,7 +36,7 @@ class Wpls_Api
         ],
         'button_color' => [
           'required' => true,
-          'sanitize_callback' => 'sanitize_hex_color'
+          'sanitize_callback' => 'sanitize_text_field'
         ],
         'button_position' => [
           'required' => true,
@@ -49,6 +49,42 @@ class Wpls_Api
         'is_enabled' => [
           'required' => true,
           'sanitize_callback' => 'rest_sanitize_boolean'
+        ],
+        'font_color' => [
+          'required' => false,
+          'sanitize_callback' => 'sanitize_text_field'
+        ],
+        'font_size' => [
+          'required' => false,
+          'sanitize_callback' => 'absint'
+        ],
+        'button_padding' => [
+          'required' => false,
+          'sanitize_callback' => 'absint'
+        ],
+        'button_margin' => [
+          'required' => false,
+          'sanitize_callback' => 'absint'
+        ],
+        'border_radius' => [
+          'required' => false,
+          'sanitize_callback' => 'absint'
+        ],
+        'border_width' => [
+          'required' => false,
+          'sanitize_callback' => 'absint'
+        ],
+        'border_color' => [
+          'required' => false,
+          'sanitize_callback' => 'sanitize_text_field'
+        ],
+        'show_icon' => [
+          'required' => false,
+          'sanitize_callback' => 'rest_sanitize_boolean'
+        ],
+        'icon_position' => [
+          'required' => false,
+          'sanitize_callback' => 'sanitize_text_field'
         ]
       ]
     ]);
@@ -64,9 +100,18 @@ class Wpls_Api
     $settings = get_option('wpls_button_settings', [
       'button_text' => 'Add to Wishlist',
       'button_color' => '#667eea',
-      'button_position' => 'before_cart',
+      'button_position' => 'before_add_to_cart_button',
       'animation_style' => 'bounce',
-      'is_enabled' => true
+      'is_enabled' => true,
+      'font_color' => '#ffffff',
+      'font_size' => 16,
+      'button_padding' => 12,
+      'button_margin' => 10,
+      'border_radius' => 6,
+      'border_width' => 0,
+      'border_color' => '#000000',
+      'show_icon' => true,
+      'icon_position' => 'left'
     ]);
 
     return new \WP_REST_Response($settings, 200);
@@ -74,16 +119,24 @@ class Wpls_Api
 
   public function save_button_settings(\WP_REST_Request $request): \WP_REST_Response
   {
-    // Add error logging for debugging
     error_log('WPLS API: save_button_settings called');
 
     try {
       $settings = [
         'button_text'     => sanitize_text_field($request->get_param('button_text')),
-        'button_color'    => sanitize_text_field($request->get_param('button_color')), // Changed from sanitize_hex_color
+        'button_color'    => sanitize_text_field($request->get_param('button_color')),
         'button_position' => sanitize_text_field($request->get_param('button_position')),
         'animation_style' => sanitize_text_field($request->get_param('animation_style')),
-        'is_enabled'      => rest_sanitize_boolean($request->get_param('is_enabled'))
+        'is_enabled'      => rest_sanitize_boolean($request->get_param('is_enabled')),
+        'font_color'      => sanitize_text_field($request->get_param('font_color') ?: '#ffffff'),
+        'font_size'       => absint($request->get_param('font_size') ?: 16),
+        'button_padding'  => absint($request->get_param('button_padding') ?: 12),
+        'button_margin'   => absint($request->get_param('button_margin') ?: 10),
+        'border_radius'   => absint($request->get_param('border_radius') ?: 6),
+        'border_width'    => absint($request->get_param('border_width') ?: 0),
+        'border_color'    => sanitize_text_field($request->get_param('border_color') ?: '#000000'),
+        'show_icon'       => rest_sanitize_boolean($request->get_param('show_icon') !== false),
+        'icon_position'   => sanitize_text_field($request->get_param('icon_position') ?: 'left')
       ];
 
       error_log('WPLS API: Settings to save: ' . print_r($settings, true));

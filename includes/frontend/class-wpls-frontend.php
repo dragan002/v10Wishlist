@@ -107,18 +107,26 @@ class Wpls_Frontend
   {
     global $product;
 
-
     if (!$product || !is_a($product, 'WC_Product')) {
       return;
     }
 
-    // Get button settings from admin
+    // Get button settings from admin with all new styling options
     $settings = get_option('wpls_button_settings', [
       'button_text' => 'Add to Wishlist',
       'button_color' => '#667eea',
-      'button_position' => 'before_cart',
+      'button_position' => 'before_add_to_cart_button',
       'animation_style' => 'bounce',
-      'is_enabled' => true
+      'is_enabled' => true,
+      'font_color' => '#ffffff',
+      'font_size' => 16,
+      'button_padding' => 12,
+      'button_margin' => 10,
+      'border_radius' => 6,
+      'border_width' => 0,
+      'border_color' => '#000000',
+      'show_icon' => true,
+      'icon_position' => 'left'
     ]);
 
     // Don't show button if disabled
@@ -133,8 +141,24 @@ class Wpls_Frontend
     $in_wishlist = \WishlistSimple\Core\Wpls_Database::is_product_in_wishlist($product_id, $user_id);
 
     $button_text = $in_wishlist ? __('View Wishlist', 'wishlist-simple') : esc_html($settings['button_text']);
-    $button_color = esc_attr($settings['button_color']);
     $animation_class = 'wpls-animation-' . esc_attr($settings['animation_style']);
+
+    // Build dynamic styles
+    $button_styles = sprintf(
+      'background-color: %s; color: %s; font-size: %spx; padding: %spx; margin: %spx; border-radius: %spx; border: %s; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; text-decoration: none;',
+      esc_attr($settings['button_color']),
+      esc_attr($settings['font_color']),
+      esc_attr($settings['font_size']),
+      esc_attr($settings['button_padding']),
+      esc_attr($settings['button_margin']),
+      esc_attr($settings['border_radius']),
+      $settings['border_width'] > 0 ?
+        sprintf('%spx solid %s', esc_attr($settings['border_width']), esc_attr($settings['border_color'])) :
+        'none'
+    );
+
+    // Heart icon SVG
+    $heart_icon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>';
 
 ?>
     <div class="wpls-add-to-wishlist-container">
@@ -143,8 +167,17 @@ class Wpls_Frontend
         class="button wpls-add-to-wishlist-button <?php echo $in_wishlist ? 'added-to-wishlist' : ''; ?> <?php echo esc_attr($animation_class); ?>"
         id="wpls-add-to-wishlist-button-<?php echo esc_attr($product_id); ?>"
         data-product-id="<?php echo esc_attr($product_id); ?>"
-        style="background-color: <?php echo $button_color; ?>; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; transition: all 0.3s ease;">
-        <?php echo $button_text; ?>
+        style="<?php echo $button_styles; ?>">
+
+        <?php if ($settings['show_icon'] && $settings['icon_position'] === 'left'): ?>
+          <?php echo $heart_icon; ?>
+        <?php endif; ?>
+
+        <span><?php echo $button_text; ?></span>
+
+        <?php if ($settings['show_icon'] && $settings['icon_position'] === 'right'): ?>
+          <?php echo $heart_icon; ?>
+        <?php endif; ?>
       </button>
     </div>
 
