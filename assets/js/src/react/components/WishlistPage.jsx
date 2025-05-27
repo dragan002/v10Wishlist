@@ -24,6 +24,20 @@ const WishlistPage = () => {
   const [error, setError] = useState(null);
   const toast = useToast();
 
+  // Get settings from PHP with all new options
+  const settings = typeof wpls_wishlist_data !== 'undefined' && wpls_wishlist_data.page_settings
+    ? wpls_wishlist_data.page_settings
+    : {
+      page_title: 'My Wishlist',
+      color_scheme: 'blue',
+      show_prices: true,
+      show_date_added: true,
+      layout_style: 'grid',
+      show_product_description: true,
+      show_stock_status: true,
+      continue_shopping_text: 'Continue Shopping'
+    };
+
   useEffect(() => {
     fetchWishlistItems();
   }, []);
@@ -192,110 +206,202 @@ const WishlistPage = () => {
     }
   };
 
+  // NEW: Render function for individual wishlist items
+  const renderWishlistItem = (item) => {
+    const isListLayout = settings.layout_style === 'list';
+
+    return (
+      <Box
+        key={item.id}
+        borderWidth="1px"
+        borderRadius="lg"
+        overflow="hidden"
+        bg="white"
+        shadow="sm"
+        _hover={{ shadow: 'md' }}
+        transition="all 0.2s"
+        p={isListLayout ? 4 : 0}
+        display={isListLayout ? 'flex' : 'block'}
+        alignItems={isListLayout ? 'center' : 'stretch'}
+        gap={isListLayout ? 4 : 0}
+        position="relative"
+      >
+        {/* Remove Button */}
+        <IconButton
+          icon={<CloseIcon />}
+          size="sm"
+          position="absolute"
+          top={2}
+          right={2}
+          zIndex={1}
+          colorScheme="red"
+          variant="solid"
+          onClick={() => removeItem(item.id)}
+          aria-label="Remove item"
+        />
+
+        {/* Product Image */}
+        <Box
+          flexShrink={0}
+          width={isListLayout ? '120px' : 'full'}
+          height={isListLayout ? '120px' : '200px'}
+        >
+          <Image
+            src={item.image}
+            alt={item.name}
+            width="100%"
+            height="100%"
+            objectFit="cover"
+          />
+        </Box>
+
+        {/* Product Info */}
+        <Box p={isListLayout ? 0 : 4} flex={isListLayout ? 1 : 'none'}>
+          <Stack spacing={2}>
+            <Heading size={isListLayout ? "sm" : "md"} noOfLines={2}>
+              <Link href={item.url} color={`${settings.color_scheme}.600`}>
+                {item.name}
+              </Link>
+            </Heading>
+
+            {/* NEW: Product Description */}
+            {settings.show_product_description && item.description && (
+              <Text fontSize="sm" color="gray.600" noOfLines={isListLayout ? 1 : 2}>
+                {item.description}
+              </Text>
+            )}
+
+            {/* Price */}
+            {settings.show_prices && (
+              <Text
+                fontSize={isListLayout ? "md" : "lg"}
+                fontWeight="bold"
+                color={`${settings.color_scheme}.500`}
+                dangerouslySetInnerHTML={{ __html: item.price_html }}
+              />
+            )}
+
+            {/* Date Added */}
+            {settings.show_date_added && (
+              <Text fontSize="sm" color="gray.500">
+                Added: {new Date(item.date_added).toLocaleDateString()}
+              </Text>
+            )}
+
+            {/* Action Area */}
+            <Flex
+              justify="space-between"
+              align="center"
+              mt={2}
+              direction={isListLayout ? "row" : "column"}
+              gap={2}
+            >
+              {/* NEW: Stock Status */}
+              {settings.show_stock_status && (
+                <Badge
+                  colorScheme={item.in_stock ? 'green' : 'red'}
+                  variant="subtle"
+                  width="fit-content"
+                >
+                  {item.in_stock ? 'In Stock' : 'Out of Stock'}
+                </Badge>
+              )}
+
+              <Button
+                colorScheme={settings.color_scheme}
+                size="sm"
+                onClick={() => addToCart(item.product_id)}
+                isDisabled={!item.in_stock}
+                width={isListLayout ? "auto" : "full"}
+              >
+                Add to Cart
+              </Button>
+            </Flex>
+          </Stack>
+        </Box>
+      </Box>
+    );
+  };
+
   if (loading) {
     return (
       <Flex justify="center" align="center" minH="200px">
-        <Spinner size="xl" color="blue.500" />
+        <Spinner size="xl" color={`${settings.color_scheme}.500`} />
       </Flex>
     );
   }
 
   if (error) {
     return (
-      <Alert status="error" borderRadius="md">
+      <Alert status="error">
         <AlertIcon />
         {error}
       </Alert>
     );
   }
 
-  if (items.length === 0) {
-    return (
-      <Box textAlign="center" py={10}>
-        <Text mb={4}>Your wishlist is empty.</Text>
-        <Button
-          as="a"
-          href={wpls_wishlist_data.shop_url}
-          colorScheme="blue"
-        >
-          Browse Products
-        </Button>
-      </Box>
-    );
-  }
-
   return (
-    <Box>
-      <Box mb={6}>
-        <Flex justify="space-between" align="center">
-          {items.length > 0 && (
+    <Box maxW="1200px" mx="auto" p={6}>
+      {/* Dynamic page title */}
+      <Heading as="h1" size="xl" mb={6} color={`${settings.color_scheme}.600`}>
+        {settings.page_title}
+      </Heading>
+
+      {items.length === 0 ? (
+        <Box textAlign="center" py={10}>
+          <Text fontSize="lg" color="gray.500" mb={4}>
+            Your wishlist is empty
+          </Text>
+          <Button
+            as={Link}
+            href={wpls_wishlist_data.shop_url || '/shop'}
+            colorScheme={settings.color_scheme}
+            size="lg"
+          >
+            {settings.continue_shopping_text}
+          </Button>
+        </Box>
+      ) : (
+        <>
+          <Flex justify="space-between" align="center" mb={6}>
+            <Text color="gray.600">
+              {items.length} item{items.length !== 1 ? 's' : ''} in your wishlist
+            </Text>
             <Button
-              colorScheme="red"
-              variant="outline"
               onClick={clearWishlist}
+              variant="outline"
+              colorScheme="red"
+              size="sm"
             >
               Clear Wishlist
             </Button>
+          </Flex>
+
+          {/* NEW: Dynamic Layout - Grid or List */}
+          {settings.layout_style === 'grid' ? (
+            <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
+              {items.map(renderWishlistItem)}
+            </SimpleGrid>
+          ) : (
+            <Stack spacing={4}>
+              {items.map(renderWishlistItem)}
+            </Stack>
           )}
-        </Flex>
-      </Box>
 
-      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
-        {items.map((item) => (
-          <Box
-            key={item.id}
-            borderWidth="1px"
-            borderRadius="lg"
-            p={4}
-            transition="all 0.3s"
-            _hover={{ transform: "translateY(-4px)", boxShadow: "lg" }}
-          >
-            <Box overflow="hidden" borderRadius="md" mb={3}>
-              <Image
-                src={item.image}
-                alt={item.name}
-                transition="0.3s ease"
-                _hover={{ transform: "scale(1.05)" }}
-              />
-            </Box>
-
-            <Heading size="md" my={2} noOfLines={2}>
-              {item.name}
-            </Heading>
-
-            <Box
-              dangerouslySetInnerHTML={{ __html: item.price_html }}
-              mb={3}
-            />
-
-            <Box
-              position="absolute"
-              top={2}
-              right={2}
-              zIndex={2}
-            >
-              <IconButton
-                aria-label="Remove from wishlist"
-                icon={<CloseIcon />}
-                size="sm"
-                borderRadius="full"
-                colorScheme="gray"
-                onClick={() => removeItem(item.id)}
-              />
-            </Box>
-
+          {/* NEW: Continue Shopping with custom text */}
+          <Box mt={8} textAlign="center">
             <Button
-              colorScheme="red"
+              as={Link}
+              href={wpls_wishlist_data.shop_url || '/shop'}
+              variant="outline"
+              colorScheme={settings.color_scheme}
               size="lg"
-              width="full"
-              onClick={() => addToCart(item.product_id)}
-              _hover={{ transform: "scale(1.03)" }}
             >
-              Add to Cart
+              {settings.continue_shopping_text}
             </Button>
           </Box>
-        ))}
-      </SimpleGrid>
+        </>
+      )}
     </Box>
   );
 };

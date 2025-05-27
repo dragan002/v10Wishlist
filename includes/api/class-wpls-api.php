@@ -88,6 +88,53 @@ class Wpls_Api
         ]
       ]
     ]);
+
+    // ADD THESE NEW WISHLIST PAGE SETTINGS ROUTES:
+    register_rest_route($this->namespace, '/wishlist-page-settings', [
+      'methods' => 'GET',
+      'callback' => [$this, 'get_wishlist_page_settings'],
+      'permission_callback' => [$this, 'check_admin_permissions']
+    ]);
+
+    register_rest_route($this->namespace, '/wishlist-page-settings', [
+      'methods' => 'POST',
+      'callback' => [$this, 'save_wishlist_page_settings'],
+      'permission_callback' => [$this, 'check_admin_permissions'],
+      'args' => [
+        'page_title' => [
+          'required' => true,
+          'sanitize_callback' => 'sanitize_text_field'
+        ],
+        'color_scheme' => [
+          'required' => true,
+          'sanitize_callback' => 'sanitize_text_field'
+        ],
+        'show_prices' => [
+          'required' => true,
+          'sanitize_callback' => 'rest_sanitize_boolean'
+        ],
+        'show_date_added' => [
+          'required' => true,
+          'sanitize_callback' => 'rest_sanitize_boolean'
+        ],
+        'layout_style' => [
+          'required' => false,
+          'sanitize_callback' => 'sanitize_text_field'
+        ],
+        'show_product_description' => [
+          'required' => false,
+          'sanitize_callback' => 'rest_sanitize_boolean'
+        ],
+        'show_stock_status' => [
+          'required' => false,
+          'sanitize_callback' => 'rest_sanitize_boolean'
+        ],
+        'continue_shopping_text' => [
+          'required' => false,
+          'sanitize_callback' => 'sanitize_text_field'
+        ]
+      ]
+    ]);
   }
 
   public function check_admin_permissions(): bool
@@ -148,6 +195,58 @@ class Wpls_Api
       return new \WP_REST_Response([
         'success' => true,
         'message' => 'Settings saved successfully',
+        'data' => $settings
+      ], 200);
+    } catch (\Exception $e) {
+      error_log('WPLS API Error: ' . $e->getMessage());
+      return new \WP_REST_Response([
+        'success' => false,
+        'message' => 'Server error: ' . $e->getMessage()
+      ], 500);
+    }
+  }
+
+  public function get_wishlist_page_settings(\WP_REST_Request $request): \WP_REST_Response
+  {
+    $settings = get_option('wpls_wishlist_page_settings', [
+      'page_title' => 'My Wishlist',
+      'color_scheme' => 'blue',
+      'show_prices' => true,
+      'show_date_added' => true,
+      'layout_style' => 'grid',
+      'show_product_description' => true,
+      'show_stock_status' => true,
+      'continue_shopping_text' => 'Continue Shopping'
+    ]);
+
+    return new \WP_REST_Response($settings, 200);
+  }
+
+  public function save_wishlist_page_settings(\WP_REST_Request $request): \WP_REST_Response
+  {
+    error_log('WPLS API: save_wishlist_page_settings called');
+
+    try {
+      $settings = [
+        'page_title'      => sanitize_text_field($request->get_param('page_title')),
+        'color_scheme'    => sanitize_text_field($request->get_param('color_scheme')),
+        'show_prices'     => rest_sanitize_boolean($request->get_param('show_prices')),
+        'show_date_added' => rest_sanitize_boolean($request->get_param('show_date_added')),
+        'layout_style'              => sanitize_text_field($request->get_param('layout_style') ?: 'grid'),
+        'show_product_description'  => rest_sanitize_boolean($request->get_param('show_product_description') !== false),
+        'show_stock_status'         => rest_sanitize_boolean($request->get_param('show_stock_status') !== false),
+        'continue_shopping_text'    => sanitize_text_field($request->get_param('continue_shopping_text') ?: 'Continue Shopping')
+      ];
+
+      error_log('WPLS API: Wishlist page settings to save: ' . print_r($settings, true));
+
+      $updated = update_option('wpls_wishlist_page_settings', $settings);
+
+      error_log('WPLS API: Wishlist page update result: ' . ($updated ? 'success' : 'failed'));
+
+      return new \WP_REST_Response([
+        'success' => true,
+        'message' => 'Wishlist page settings saved successfully',
         'data' => $settings
       ], 200);
     } catch (\Exception $e) {

@@ -324,6 +324,14 @@ const AdminApp = () => {
   const [buttonBorderColor, setButtonBorderColor] = useState('#000000');
   const [showIcon, setShowIcon] = useState(true);
   const [iconPosition, setIconPosition] = useState('left');
+  const [wishlistPageTitle, setWishlistPageTitle] = useState('My Wishlist');
+  const [wishlistColorScheme, setWishlistColorScheme] = useState('blue');
+  const [showPrices, setShowPrices] = useState(true);
+  const [showDateAdded, setShowDateAdded] = useState(true);
+  const [layoutStyle, setLayoutStyle] = useState('grid');
+  const [showProductDescription, setShowProductDescription] = useState(true);
+  const [showStockStatus, setShowStockStatus] = useState(true);
+  const [continueShoppingText, setContinueShoppingText] = useState('Continue Shopping');
 
   const { colorMode, toggleColorMode } = useColorMode();
   const toast = useToast();
@@ -452,8 +460,98 @@ const AdminApp = () => {
     }
   };
 
+  const loadWishlistPageSettings = async () => {
+    if (rest_url === 'N/A') return;
+
+    try {
+      const response = await fetch(`${rest_url}wpls/v1/wishlist-page-settings`, {
+        method: 'GET',
+        headers: {
+          'X-WP-Nonce': nonce,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setWishlistPageTitle(data.page_title || 'My Wishlist');
+        setWishlistColorScheme(data.color_scheme || 'blue');
+        setShowPrices(data.show_prices !== false);
+        setShowDateAdded(data.show_date_added !== false);
+        setLayoutStyle(data.layout_style || 'grid');
+        setShowProductDescription(data.show_product_description !== false);
+        setShowStockStatus(data.show_stock_status !== false);
+        setContinueShoppingText(data.continue_shopping_text || 'Continue Shopping');
+      }
+    } catch (error) {
+      console.error('Failed to load wishlist page settings:', error);
+    }
+  };
+
+  const handleSaveWishlistPageSettings = async () => {
+    if (rest_url === 'N/A') {
+      toast({
+        title: 'Cannot save settings',
+        description: 'API connection not available.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(`${rest_url}wpls/v1/wishlist-page-settings`, {
+        method: 'POST',
+        headers: {
+          'X-WP-Nonce': nonce,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          page_title: wishlistPageTitle,
+          color_scheme: wishlistColorScheme,
+          show_prices: showPrices,
+          show_date_added: showDateAdded,
+          layout_style: layoutStyle,
+          show_product_description: showProductDescription,
+          show_stock_status: showStockStatus,
+          continue_shopping_text: continueShoppingText,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        toast({
+          title: 'Wishlist page settings saved! 🎉',
+          description: 'Your wishlist page configuration has been updated.',
+          status: 'success',
+          duration: 4000,
+          isClosable: true,
+          position: 'top-right',
+        });
+      } else {
+        throw new Error(data.message || 'Failed to save settings');
+      }
+    } catch (error) {
+      console.error('Save error:', error);
+      toast({
+        title: 'Failed to save wishlist page settings',
+        description: error.message || 'Please try again.',
+        status: 'error',
+        duration: 4000,
+        isClosable: true,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     loadSettings();
+    loadWishlistPageSettings();
   }, []);
 
   const handleBulkAction = (action) => {
@@ -713,6 +811,10 @@ const AdminApp = () => {
                     <Tab _selected={{ bg: 'white', shadow: 'sm' }}>
                       <Icon as={FiSettings} mr={2} />
                       Button Settings
+                    </Tab>
+                    <Tab _selected={{ bg: 'white', shadow: 'sm' }}>
+                      <Icon as={FiHeart} mr={2} />
+                      Wishlist Page Settings
                     </Tab>
                     <Tab _selected={{ bg: 'white', shadow: 'sm' }}>
                       <Icon as={FiBarChart2} mr={2} />
@@ -1062,6 +1164,230 @@ const AdminApp = () => {
                           </Button>
                           <Button variant="ghost" size="lg" leftIcon={<FiDownload />}>
                             Export Config
+                          </Button>
+                        </HStack>
+                      </VStack>
+                    </TabPanel>
+
+                    {/* Wishlist Page Settings Panel */}
+                    <TabPanel p={0}>
+                      <VStack spacing={8} align="stretch">
+                        <Box>
+                          <Flex justify="space-between" align="center" mb={6}>
+                            <Box>
+                              <Heading size="lg" mb={2}>Wishlist Page Customization</Heading>
+                              <Text color="gray.600">Customize how your wishlist page looks and behaves</Text>
+                            </Box>
+                            <Button variant="gradient" leftIcon={<FiEye />}>
+                              Preview Page
+                            </Button>
+                          </Flex>
+
+                          <Grid templateColumns={{ base: '1fr', lg: '1fr 1fr' }} gap={8}>
+                            <VStack spacing={6} align="stretch">
+                              <FormControl>
+                                <FormLabel fontWeight="semibold">Page Title</FormLabel>
+                                <Input
+                                  value={wishlistPageTitle}
+                                  onChange={(e) => setWishlistPageTitle(e.target.value)}
+                                  placeholder="My Wishlist"
+                                  size="lg"
+                                  borderRadius="lg"
+                                />
+                                <Text fontSize="sm" color="gray.500" mt={1}>
+                                  This will be displayed as the main heading on your wishlist page
+                                </Text>
+                              </FormControl>
+
+                              <FormControl>
+                                <FormLabel fontWeight="semibold">Color Scheme</FormLabel>
+                                <Select
+                                  size="lg"
+                                  borderRadius="lg"
+                                  value={wishlistColorScheme}
+                                  onChange={(e) => setWishlistColorScheme(e.target.value)}
+                                >
+                                  <option value="blue">Blue Theme</option>
+                                  <option value="purple">Purple Theme</option>
+                                  <option value="green">Green Theme</option>
+                                  <option value="red">Red Theme</option>
+                                  <option value="orange">Orange Theme</option>
+                                  <option value="pink">Pink Theme</option>
+                                  <option value="gray">Gray Theme</option>
+                                </Select>
+                                <Text fontSize="sm" color="gray.500" mt={1}>
+                                  Choose the primary color theme for your wishlist page
+                                </Text>
+                              </FormControl>
+
+                              <FormControl>
+                                <FormLabel fontWeight="semibold">Layout Style</FormLabel>
+                                <RadioGroup
+                                  value={layoutStyle}
+                                  onChange={setLayoutStyle}
+                                >
+                                  <Stack direction="row" spacing={6}>
+                                    <Radio value="grid">Grid View</Radio>
+                                    <Radio value="list">List View</Radio>
+                                  </Stack>
+                                </RadioGroup>
+                                <Text fontSize="sm" color="gray.500" mt={1}>
+                                  Choose how products are displayed on the wishlist page
+                                </Text>
+                              </FormControl>
+
+                              <FormControl>
+                                <FormLabel fontWeight="semibold">Additional Display Options</FormLabel>
+                                <VStack spacing={4} align="stretch">
+                                  <Flex justify="space-between" align="center">
+                                    <Box>
+                                      <Text fontWeight="medium">Show Prices</Text>
+                                      <Text fontSize="sm" color="gray.500">Display product prices on wishlist page</Text>
+                                    </Box>
+                                    <Switch
+                                      isChecked={showPrices}
+                                      onChange={(e) => setShowPrices(e.target.checked)}
+                                      colorScheme="blue"
+                                      size="lg"
+                                    />
+                                  </Flex>
+
+                                  <Flex justify="space-between" align="center">
+                                    <Box>
+                                      <Text fontWeight="medium">Show Date Added</Text>
+                                      <Text fontSize="sm" color="gray.500">Display when items were added to wishlist</Text>
+                                    </Box>
+                                    <Switch
+                                      isChecked={showDateAdded}
+                                      onChange={(e) => setShowDateAdded(e.target.checked)}
+                                      colorScheme="blue"
+                                      size="lg"
+                                    />
+                                  </Flex>
+
+                                  <Flex justify="space-between" align="center">
+                                    <Box>
+                                      <Text fontWeight="medium">Show Product Description</Text>
+                                      <Text fontSize="sm" color="gray.500">Display short product excerpts</Text>
+                                    </Box>
+                                    <Switch
+                                      isChecked={showProductDescription}
+                                      onChange={(e) => setShowProductDescription(e.target.checked)}
+                                      colorScheme="blue"
+                                      size="lg"
+                                    />
+                                  </Flex>
+
+                                  <Flex justify="space-between" align="center">
+                                    <Box>
+                                      <Text fontWeight="medium">Show Stock Status</Text>
+                                      <Text fontSize="sm" color="gray.500">Display product availability (In Stock/Out of Stock)</Text>
+                                    </Box>
+                                    <Switch
+                                      isChecked={showStockStatus}
+                                      onChange={(e) => setShowStockStatus(e.target.checked)}
+                                      colorScheme="blue"
+                                      size="lg"
+                                    />
+                                  </Flex>
+                                </VStack>
+                              </FormControl>
+
+                              <FormControl>
+                                <FormLabel fontWeight="semibold">Continue Shopping Button</FormLabel>
+                                <Input
+                                  value={continueShoppingText}
+                                  onChange={(e) => setContinueShoppingText(e.target.value)}
+                                  placeholder="Continue Shopping"
+                                  size="lg"
+                                  borderRadius="lg"
+                                />
+                                <Text fontSize="sm" color="gray.500" mt={1}>
+                                  Text displayed on the continue shopping button
+                                </Text>
+                              </FormControl>
+                            </VStack>
+
+                            <Box>
+                              <Text fontWeight="semibold" mb={4}>Live Preview</Text>
+                              <Box
+                                p={6}
+                                border="2px dashed"
+                                borderColor="gray.300"
+                                borderRadius="xl"
+                                bg={useColorModeValue('gray.50', 'gray.700')}
+                              >
+                                <Heading size="md" mb={4} color={`${wishlistColorScheme}.500`}>
+                                  {wishlistPageTitle}
+                                </Heading>
+
+                                <VStack spacing={4} align="stretch">
+                                  {/* Sample wishlist item */}
+                                  <Box p={4} bg="white" borderRadius="lg" shadow="sm">
+                                    <HStack spacing={4}>
+                                      <Box w="60px" h="60px" bg="gray.200" borderRadius="md" />
+                                      <Box flex={1}>
+                                        <Text fontWeight="bold">Sample Product</Text>
+                                        {showPrices && (
+                                          <Text color={`${wishlistColorScheme}.500`} fontWeight="semibold">$29.99</Text>
+                                        )}
+                                        {showDateAdded && (
+                                          <Text fontSize="sm" color="gray.500">Added: Jan 15, 2024</Text>
+                                        )}
+                                      </Box>
+                                      <Button size="sm" colorScheme={wishlistColorScheme}>
+                                        Add to Cart
+                                      </Button>
+                                    </HStack>
+                                  </Box>
+
+                                  <Box p={4} bg="white" borderRadius="lg" shadow="sm">
+                                    <HStack spacing={4}>
+                                      <Box w="60px" h="60px" bg="gray.200" borderRadius="md" />
+                                      <Box flex={1}>
+                                        <Text fontWeight="bold">Another Product</Text>
+                                        {showPrices && (
+                                          <Text color={`${wishlistColorScheme}.500`} fontWeight="semibold">$49.99</Text>
+                                        )}
+                                        {showDateAdded && (
+                                          <Text fontSize="sm" color="gray.500">Added: Jan 12, 2024</Text>
+                                        )}
+                                      </Box>
+                                      <Button size="sm" colorScheme={wishlistColorScheme}>
+                                        Add to Cart
+                                      </Button>
+                                    </HStack>
+                                  </Box>
+                                </VStack>
+                              </Box>
+
+                              <Box mt={6} p={4} bg={useColorModeValue('blue.50', 'blue.900')} borderRadius="lg">
+                                <Text fontSize="sm" fontWeight="semibold" color="blue.600" mb={2}>
+                                  💡 Preview Tip
+                                </Text>
+                                <Text fontSize="sm" color="blue.600">
+                                  This preview shows how your settings will affect the actual wishlist page appearance.
+                                </Text>
+                              </Box>
+                            </Box>
+                          </Grid>
+                        </Box>
+
+                        <Divider />
+
+                        <HStack spacing={4}>
+                          <Button
+                            variant="gradient"
+                            size="lg"
+                            leftIcon={isLoading ? <Spinner size="sm" /> : <FiZap />}
+                            onClick={handleSaveWishlistPageSettings}
+                            isLoading={isLoading}
+                            loadingText="Saving..."
+                          >
+                            Save Wishlist Settings
+                          </Button>
+                          <Button variant="outline" size="lg" leftIcon={<FiRefreshCw />}>
+                            Reset to Default
                           </Button>
                         </HStack>
                       </VStack>

@@ -66,6 +66,18 @@ class Wpls_Wishlist_Page
       true
     );
 
+    // Get wishlist page settings with all new options
+    $wishlist_page_settings = get_option('wpls_wishlist_page_settings', [
+      'page_title' => 'My Wishlist',
+      'color_scheme' => 'blue',
+      'show_prices' => true,
+      'show_date_added' => true,
+      'layout_style' => 'grid',
+      'show_product_description' => true,
+      'show_stock_status' => true,
+      'continue_shopping_text' => 'Continue Shopping'
+    ]);
+
     // Get wishlist page URL
     $wishlist_page_id = get_option('wpls_wishlist_page_id');
     $wishlist_url = $wishlist_page_id ? get_permalink($wishlist_page_id) : '';
@@ -82,6 +94,7 @@ class Wpls_Wishlist_Page
         'shop_url' => get_permalink(wc_get_page_id('shop')),
         'cart_url' => wc_get_cart_url(),
         'wishlist_url' => $wishlist_url,
+        'page_settings' => $wishlist_page_settings
       ]
     );
   }

@@ -17,18 +17,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/toast/use-toast.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/flex/flex.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/spinner/spinner.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/alert/alert.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/alert/alert-icon.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/box/box.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/typography/text.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/button/button.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/grid/simple-grid.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/image/image.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/typography/heading.mjs");
-/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/button/icon-button.mjs");
-/* harmony import */ var _chakra_ui_icons__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @chakra-ui/icons */ "./node_modules/@chakra-ui/icons/dist/esm/Close.mjs");
+/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/box/box.mjs");
+/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/button/icon-button.mjs");
+/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/image/image.mjs");
+/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/stack/stack.mjs");
+/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/typography/heading.mjs");
+/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/link/link.mjs");
+/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/typography/text.mjs");
+/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/flex/flex.mjs");
+/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/badge/badge.mjs");
+/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/button/button.mjs");
+/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/spinner/spinner.mjs");
+/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/alert/alert.mjs");
+/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/alert/alert-icon.mjs");
+/* harmony import */ var _chakra_ui_react__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/grid/simple-grid.mjs");
+/* harmony import */ var _chakra_ui_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @chakra-ui/icons */ "./node_modules/@chakra-ui/icons/dist/esm/Close.mjs");
 
 
 
@@ -38,6 +41,18 @@ const WishlistPage = () => {
   const [loading, setLoading] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(true);
   const [error, setError] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
   const toast = (0,_chakra_ui_react__WEBPACK_IMPORTED_MODULE_2__.useToast)();
+
+  // Get settings from PHP with all new options
+  const settings = typeof wpls_wishlist_data !== 'undefined' && wpls_wishlist_data.page_settings ? wpls_wishlist_data.page_settings : {
+    page_title: 'My Wishlist',
+    color_scheme: 'blue',
+    show_prices: true,
+    show_date_added: true,
+    layout_style: 'grid',
+    show_product_description: true,
+    show_stock_status: true,
+    continue_shopping_text: 'Continue Shopping'
+  };
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     fetchWishlistItems();
   }, []);
@@ -175,101 +190,156 @@ const WishlistPage = () => {
       });
     }
   };
+
+  // NEW: Render function for individual wishlist items
+  const renderWishlistItem = item => {
+    const isListLayout = settings.layout_style === 'list';
+    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_3__.Box, {
+      key: item.id,
+      borderWidth: "1px",
+      borderRadius: "lg",
+      overflow: "hidden",
+      bg: "white",
+      shadow: "sm",
+      _hover: {
+        shadow: 'md'
+      },
+      transition: "all 0.2s",
+      p: isListLayout ? 4 : 0,
+      display: isListLayout ? 'flex' : 'block',
+      alignItems: isListLayout ? 'center' : 'stretch',
+      gap: isListLayout ? 4 : 0,
+      position: "relative"
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_4__.IconButton, {
+      icon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_icons__WEBPACK_IMPORTED_MODULE_5__.CloseIcon, null),
+      size: "sm",
+      position: "absolute",
+      top: 2,
+      right: 2,
+      zIndex: 1,
+      colorScheme: "red",
+      variant: "solid",
+      onClick: () => removeItem(item.id),
+      "aria-label": "Remove item"
+    }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_3__.Box, {
+      flexShrink: 0,
+      width: isListLayout ? '120px' : 'full',
+      height: isListLayout ? '120px' : '200px'
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_6__.Image, {
+      src: item.image,
+      alt: item.name,
+      width: "100%",
+      height: "100%",
+      objectFit: "cover"
+    })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_3__.Box, {
+      p: isListLayout ? 0 : 4,
+      flex: isListLayout ? 1 : 'none'
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__.Stack, {
+      spacing: 2
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Heading, {
+      size: isListLayout ? "sm" : "md",
+      noOfLines: 2
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_9__.Link, {
+      href: item.url,
+      color: `${settings.color_scheme}.600`
+    }, item.name)), settings.show_product_description && item.description && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_10__.Text, {
+      fontSize: "sm",
+      color: "gray.600",
+      noOfLines: isListLayout ? 1 : 2
+    }, item.description), settings.show_prices && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_10__.Text, {
+      fontSize: isListLayout ? "md" : "lg",
+      fontWeight: "bold",
+      color: `${settings.color_scheme}.500`,
+      dangerouslySetInnerHTML: {
+        __html: item.price_html
+      }
+    }), settings.show_date_added && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_10__.Text, {
+      fontSize: "sm",
+      color: "gray.500"
+    }, "Added: ", new Date(item.date_added).toLocaleDateString()), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_11__.Flex, {
+      justify: "space-between",
+      align: "center",
+      mt: 2,
+      direction: isListLayout ? "row" : "column",
+      gap: 2
+    }, settings.show_stock_status && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_12__.Badge, {
+      colorScheme: item.in_stock ? 'green' : 'red',
+      variant: "subtle",
+      width: "fit-content"
+    }, item.in_stock ? 'In Stock' : 'Out of Stock'), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_13__.Button, {
+      colorScheme: settings.color_scheme,
+      size: "sm",
+      onClick: () => addToCart(item.product_id),
+      isDisabled: !item.in_stock,
+      width: isListLayout ? "auto" : "full"
+    }, "Add to Cart")))));
+  };
   if (loading) {
-    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_3__.Flex, {
+    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_11__.Flex, {
       justify: "center",
       align: "center",
       minH: "200px"
-    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_4__.Spinner, {
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_14__.Spinner, {
       size: "xl",
-      color: "blue.500"
+      color: `${settings.color_scheme}.500`
     }));
   }
   if (error) {
-    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_5__.Alert, {
-      status: "error",
-      borderRadius: "md"
-    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_6__.AlertIcon, null), error);
+    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_15__.Alert, {
+      status: "error"
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.AlertIcon, null), error);
   }
-  if (items.length === 0) {
-    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__.Box, {
-      textAlign: "center",
-      py: 10
-    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Text, {
-      mb: 4
-    }, "Your wishlist is empty."), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_9__.Button, {
-      as: "a",
-      href: wpls_wishlist_data.shop_url,
-      colorScheme: "blue"
-    }, "Browse Products"));
-  }
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__.Box, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__.Box, {
-    mb: 6
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_3__.Flex, {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_3__.Box, {
+    maxW: "1200px",
+    mx: "auto",
+    p: 6
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Heading, {
+    as: "h1",
+    size: "xl",
+    mb: 6,
+    color: `${settings.color_scheme}.600`
+  }, settings.page_title), items.length === 0 ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_3__.Box, {
+    textAlign: "center",
+    py: 10
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_10__.Text, {
+    fontSize: "lg",
+    color: "gray.500",
+    mb: 4
+  }, "Your wishlist is empty"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_13__.Button, {
+    as: _chakra_ui_react__WEBPACK_IMPORTED_MODULE_9__.Link,
+    href: wpls_wishlist_data.shop_url || '/shop',
+    colorScheme: settings.color_scheme,
+    size: "lg"
+  }, settings.continue_shopping_text)) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_11__.Flex, {
     justify: "space-between",
-    align: "center"
-  }, items.length > 0 && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_9__.Button, {
-    colorScheme: "red",
+    align: "center",
+    mb: 6
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_10__.Text, {
+    color: "gray.600"
+  }, items.length, " item", items.length !== 1 ? 's' : '', " in your wishlist"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_13__.Button, {
+    onClick: clearWishlist,
     variant: "outline",
-    onClick: clearWishlist
-  }, "Clear Wishlist"))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_10__.SimpleGrid, {
+    colorScheme: "red",
+    size: "sm"
+  }, "Clear Wishlist")), settings.layout_style === 'grid' ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_17__.SimpleGrid, {
     columns: {
       base: 1,
       md: 2,
       lg: 3
     },
     spacing: 6
-  }, items.map(item => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__.Box, {
-    key: item.id,
-    borderWidth: "1px",
-    borderRadius: "lg",
-    p: 4,
-    transition: "all 0.3s",
-    _hover: {
-      transform: "translateY(-4px)",
-      boxShadow: "lg"
-    }
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__.Box, {
-    overflow: "hidden",
-    borderRadius: "md",
-    mb: 3
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_11__.Image, {
-    src: item.image,
-    alt: item.name,
-    transition: "0.3s ease",
-    _hover: {
-      transform: "scale(1.05)"
-    }
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_12__.Heading, {
-    size: "md",
-    my: 2,
-    noOfLines: 2
-  }, item.name), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__.Box, {
-    dangerouslySetInnerHTML: {
-      __html: item.price_html
-    },
-    mb: 3
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__.Box, {
-    position: "absolute",
-    top: 2,
-    right: 2,
-    zIndex: 2
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_13__.IconButton, {
-    "aria-label": "Remove from wishlist",
-    icon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_icons__WEBPACK_IMPORTED_MODULE_14__.CloseIcon, null),
-    size: "sm",
-    borderRadius: "full",
-    colorScheme: "gray",
-    onClick: () => removeItem(item.id)
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_9__.Button, {
-    colorScheme: "red",
-    size: "lg",
-    width: "full",
-    onClick: () => addToCart(item.product_id),
-    _hover: {
-      transform: "scale(1.03)"
-    }
-  }, "Add to Cart")))));
+  }, items.map(renderWishlistItem)) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_7__.Stack, {
+    spacing: 4
+  }, items.map(renderWishlistItem)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_3__.Box, {
+    mt: 8,
+    textAlign: "center"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_13__.Button, {
+    as: _chakra_ui_react__WEBPACK_IMPORTED_MODULE_9__.Link,
+    href: wpls_wishlist_data.shop_url || '/shop',
+    variant: "outline",
+    colorScheme: settings.color_scheme,
+    size: "lg"
+  }, settings.continue_shopping_text))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (WishlistPage);
 
@@ -1095,6 +1165,56 @@ const Alert = (0,_system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_1__.forwardRef
   ) }) });
 });
 Alert.displayName = "Alert";
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@chakra-ui/react/dist/esm/badge/badge.mjs":
+/*!****************************************************************!*\
+  !*** ./node_modules/@chakra-ui/react/dist/esm/badge/badge.mjs ***!
+  \****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Badge: () => (/* binding */ Badge)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _chakra_ui_styled_system__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @chakra-ui/styled-system */ "./node_modules/@chakra-ui/styled-system/dist/esm/theming-props.mjs");
+/* harmony import */ var _chakra_ui_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @chakra-ui/utils */ "./node_modules/@chakra-ui/utils/dist/esm/cx.mjs");
+/* harmony import */ var _system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../system/forward-ref.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/forward-ref.mjs");
+/* harmony import */ var _system_use_style_config_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../system/use-style-config.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/use-style-config.mjs");
+/* harmony import */ var _system_factory_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../system/factory.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/factory.mjs");
+'use client';
+
+
+
+
+
+
+
+const Badge = (0,_system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(function Badge2(props, ref) {
+  const styles = (0,_system_use_style_config_mjs__WEBPACK_IMPORTED_MODULE_2__.useStyleConfig)("Badge", props);
+  const { className, ...rest } = (0,_chakra_ui_styled_system__WEBPACK_IMPORTED_MODULE_3__.omitThemingProps)(props);
+  return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(
+    _system_factory_mjs__WEBPACK_IMPORTED_MODULE_4__.chakra.span,
+    {
+      ref,
+      className: (0,_chakra_ui_utils__WEBPACK_IMPORTED_MODULE_5__.cx)("chakra-badge", props.className),
+      ...rest,
+      __css: {
+        display: "inline-block",
+        whiteSpace: "nowrap",
+        verticalAlign: "middle",
+        ...styles
+      }
+    }
+  );
+});
+Badge.displayName = "Badge";
 
 
 
@@ -2766,6 +2886,53 @@ const shouldShowFallbackImage = (status, fallbackStrategy) => status !== "loaded
 
 /***/ }),
 
+/***/ "./node_modules/@chakra-ui/react/dist/esm/link/link.mjs":
+/*!**************************************************************!*\
+  !*** ./node_modules/@chakra-ui/react/dist/esm/link/link.mjs ***!
+  \**************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Link: () => (/* binding */ Link)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _chakra_ui_styled_system__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @chakra-ui/styled-system */ "./node_modules/@chakra-ui/styled-system/dist/esm/theming-props.mjs");
+/* harmony import */ var _chakra_ui_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @chakra-ui/utils */ "./node_modules/@chakra-ui/utils/dist/esm/cx.mjs");
+/* harmony import */ var _system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../system/forward-ref.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/forward-ref.mjs");
+/* harmony import */ var _system_use_style_config_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../system/use-style-config.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/use-style-config.mjs");
+/* harmony import */ var _system_factory_mjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../system/factory.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/factory.mjs");
+'use client';
+
+
+
+
+
+
+
+const Link = (0,_system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(function Link2(props, ref) {
+  const styles = (0,_system_use_style_config_mjs__WEBPACK_IMPORTED_MODULE_2__.useStyleConfig)("Link", props);
+  const { className, isExternal, ...rest } = (0,_chakra_ui_styled_system__WEBPACK_IMPORTED_MODULE_3__.omitThemingProps)(props);
+  return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(
+    _system_factory_mjs__WEBPACK_IMPORTED_MODULE_4__.chakra.a,
+    {
+      target: isExternal ? "_blank" : void 0,
+      rel: isExternal ? "noopener" : void 0,
+      ref,
+      className: (0,_chakra_ui_utils__WEBPACK_IMPORTED_MODULE_5__.cx)("chakra-link", className),
+      ...rest,
+      __css: styles
+    }
+  );
+});
+Link.displayName = "Link";
+
+
+
+
+/***/ }),
+
 /***/ "./node_modules/@chakra-ui/react/dist/esm/portal/portal-manager.mjs":
 /*!**************************************************************************!*\
   !*** ./node_modules/@chakra-ui/react/dist/esm/portal/portal-manager.mjs ***!
@@ -3103,6 +3270,201 @@ const Spinner = (0,_system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_2__.forwardR
   );
 });
 Spinner.displayName = "Spinner";
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@chakra-ui/react/dist/esm/stack/stack-item.mjs":
+/*!*********************************************************************!*\
+  !*** ./node_modules/@chakra-ui/react/dist/esm/stack/stack-item.mjs ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   StackItem: () => (/* binding */ StackItem)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _system_factory_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../system/factory.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/factory.mjs");
+'use client';
+
+
+
+const StackItem = (props) => /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(
+  _system_factory_mjs__WEBPACK_IMPORTED_MODULE_1__.chakra.div,
+  {
+    className: "chakra-stack__item",
+    ...props,
+    __css: {
+      display: "inline-block",
+      flex: "0 0 auto",
+      minWidth: 0,
+      ...props["__css"]
+    }
+  }
+);
+StackItem.displayName = "StackItem";
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@chakra-ui/react/dist/esm/stack/stack.mjs":
+/*!****************************************************************!*\
+  !*** ./node_modules/@chakra-ui/react/dist/esm/stack/stack.mjs ***!
+  \****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Stack: () => (/* binding */ Stack)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _chakra_ui_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @chakra-ui/utils */ "./node_modules/@chakra-ui/utils/dist/esm/children.mjs");
+/* harmony import */ var _chakra_ui_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @chakra-ui/utils */ "./node_modules/@chakra-ui/utils/dist/esm/cx.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var _stack_item_mjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./stack-item.mjs */ "./node_modules/@chakra-ui/react/dist/esm/stack/stack-item.mjs");
+/* harmony import */ var _stack_utils_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./stack.utils.mjs */ "./node_modules/@chakra-ui/react/dist/esm/stack/stack.utils.mjs");
+/* harmony import */ var _system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../system/forward-ref.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/forward-ref.mjs");
+/* harmony import */ var _system_factory_mjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../system/factory.mjs */ "./node_modules/@chakra-ui/react/dist/esm/system/factory.mjs");
+'use client';
+
+
+
+
+
+
+
+
+const Stack = (0,_system_forward_ref_mjs__WEBPACK_IMPORTED_MODULE_2__.forwardRef)((props, ref) => {
+  const {
+    isInline,
+    direction: directionProp,
+    align,
+    justify,
+    spacing = "0.5rem",
+    wrap,
+    children,
+    divider,
+    className,
+    shouldWrapChildren,
+    ...rest
+  } = props;
+  const direction = isInline ? "row" : directionProp ?? "column";
+  const dividerStyle = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(
+    () => (0,_stack_utils_mjs__WEBPACK_IMPORTED_MODULE_3__.getDividerStyles)({ spacing, direction }),
+    [spacing, direction]
+  );
+  const hasDivider = !!divider;
+  const shouldUseChildren = !shouldWrapChildren && !hasDivider;
+  const clones = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => {
+    const validChildren = (0,_chakra_ui_utils__WEBPACK_IMPORTED_MODULE_4__.getValidChildren)(children);
+    return shouldUseChildren ? validChildren : validChildren.map((child, index) => {
+      const key = typeof child.key !== "undefined" ? child.key : index;
+      const isLast = index + 1 === validChildren.length;
+      const wrappedChild = /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_stack_item_mjs__WEBPACK_IMPORTED_MODULE_5__.StackItem, { children: child }, key);
+      const _child = shouldWrapChildren ? wrappedChild : child;
+      if (!hasDivider)
+        return _child;
+      const clonedDivider = (0,react__WEBPACK_IMPORTED_MODULE_1__.cloneElement)(
+        divider,
+        {
+          __css: dividerStyle
+        }
+      );
+      const _divider = isLast ? null : clonedDivider;
+      return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react__WEBPACK_IMPORTED_MODULE_1__.Fragment, { children: [
+        _child,
+        _divider
+      ] }, key);
+    });
+  }, [
+    divider,
+    dividerStyle,
+    hasDivider,
+    shouldUseChildren,
+    shouldWrapChildren,
+    children
+  ]);
+  const _className = (0,_chakra_ui_utils__WEBPACK_IMPORTED_MODULE_6__.cx)("chakra-stack", className);
+  return /* @__PURE__ */ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(
+    _system_factory_mjs__WEBPACK_IMPORTED_MODULE_7__.chakra.div,
+    {
+      ref,
+      display: "flex",
+      alignItems: align,
+      justifyContent: justify,
+      flexDirection: direction,
+      flexWrap: wrap,
+      gap: hasDivider ? void 0 : spacing,
+      className: _className,
+      ...rest,
+      children: clones
+    }
+  );
+});
+Stack.displayName = "Stack";
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@chakra-ui/react/dist/esm/stack/stack.utils.mjs":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@chakra-ui/react/dist/esm/stack/stack.utils.mjs ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getDividerStyles: () => (/* binding */ getDividerStyles)
+/* harmony export */ });
+/* harmony import */ var _chakra_ui_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @chakra-ui/utils */ "./node_modules/@chakra-ui/utils/dist/esm/responsive.mjs");
+'use client';
+
+
+function getDividerStyles(options) {
+  const { spacing, direction } = options;
+  const dividerStyles = {
+    column: {
+      my: spacing,
+      mx: 0,
+      borderLeftWidth: 0,
+      borderBottomWidth: "1px"
+    },
+    "column-reverse": {
+      my: spacing,
+      mx: 0,
+      borderLeftWidth: 0,
+      borderBottomWidth: "1px"
+    },
+    row: {
+      mx: spacing,
+      my: 0,
+      borderLeftWidth: "1px",
+      borderBottomWidth: 0
+    },
+    "row-reverse": {
+      mx: spacing,
+      my: 0,
+      borderLeftWidth: "1px",
+      borderBottomWidth: 0
+    }
+  };
+  return {
+    "&": (0,_chakra_ui_utils__WEBPACK_IMPORTED_MODULE_0__.mapResponsive)(
+      direction,
+      (value) => dividerStyles[value]
+    )
+  };
+}
 
 
 
@@ -12270,6 +12632,31 @@ function analyzeBreakpoints(breakpoints) {
       );
     }
   };
+}
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@chakra-ui/utils/dist/esm/children.mjs":
+/*!*************************************************************!*\
+  !*** ./node_modules/@chakra-ui/utils/dist/esm/children.mjs ***!
+  \*************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getValidChildren: () => (/* binding */ getValidChildren)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+
+
+function getValidChildren(children) {
+  return react__WEBPACK_IMPORTED_MODULE_0__.Children.toArray(children).filter(
+    (child) => (0,react__WEBPACK_IMPORTED_MODULE_0__.isValidElement)(child)
+  );
 }
 
 

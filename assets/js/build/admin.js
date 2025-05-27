@@ -56846,6 +56846,14 @@ const AdminApp = () => {
   const [buttonBorderColor, setButtonBorderColor] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('#000000');
   const [showIcon, setShowIcon] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   const [iconPosition, setIconPosition] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('left');
+  const [wishlistPageTitle, setWishlistPageTitle] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('My Wishlist');
+  const [wishlistColorScheme, setWishlistColorScheme] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('blue');
+  const [showPrices, setShowPrices] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+  const [showDateAdded, setShowDateAdded] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+  const [layoutStyle, setLayoutStyle] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('grid');
+  const [showProductDescription, setShowProductDescription] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+  const [showStockStatus, setShowStockStatus] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+  const [continueShoppingText, setContinueShoppingText] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('Continue Shopping');
   const {
     colorMode,
     toggleColorMode
@@ -56978,8 +56986,90 @@ const AdminApp = () => {
       setIsLoading(false);
     }
   };
+  const loadWishlistPageSettings = async () => {
+    if (rest_url === 'N/A') return;
+    try {
+      const response = await fetch(`${rest_url}wpls/v1/wishlist-page-settings`, {
+        method: 'GET',
+        headers: {
+          'X-WP-Nonce': nonce,
+          'Content-Type': 'application/json'
+        }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setWishlistPageTitle(data.page_title || 'My Wishlist');
+        setWishlistColorScheme(data.color_scheme || 'blue');
+        setShowPrices(data.show_prices !== false);
+        setShowDateAdded(data.show_date_added !== false);
+        setLayoutStyle(data.layout_style || 'grid');
+        setShowProductDescription(data.show_product_description !== false);
+        setShowStockStatus(data.show_stock_status !== false);
+        setContinueShoppingText(data.continue_shopping_text || 'Continue Shopping');
+      }
+    } catch (error) {
+      console.error('Failed to load wishlist page settings:', error);
+    }
+  };
+  const handleSaveWishlistPageSettings = async () => {
+    if (rest_url === 'N/A') {
+      toast({
+        title: 'Cannot save settings',
+        description: 'API connection not available.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true
+      });
+      return;
+    }
+    setIsLoading(true);
+    try {
+      const response = await fetch(`${rest_url}wpls/v1/wishlist-page-settings`, {
+        method: 'POST',
+        headers: {
+          'X-WP-Nonce': nonce,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          page_title: wishlistPageTitle,
+          color_scheme: wishlistColorScheme,
+          show_prices: showPrices,
+          show_date_added: showDateAdded,
+          layout_style: layoutStyle,
+          show_product_description: showProductDescription,
+          show_stock_status: showStockStatus,
+          continue_shopping_text: continueShoppingText
+        })
+      });
+      const data = await response.json();
+      if (response.ok && data.success) {
+        toast({
+          title: 'Wishlist page settings saved! 🎉',
+          description: 'Your wishlist page configuration has been updated.',
+          status: 'success',
+          duration: 4000,
+          isClosable: true,
+          position: 'top-right'
+        });
+      } else {
+        throw new Error(data.message || 'Failed to save settings');
+      }
+    } catch (error) {
+      console.error('Save error:', error);
+      toast({
+        title: 'Failed to save wishlist page settings',
+        description: error.message || 'Please try again.',
+        status: 'error',
+        duration: 4000,
+        isClosable: true
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     loadSettings();
+    loadWishlistPageSettings();
   }, []);
   const handleBulkAction = action => {
     toast({
@@ -57321,6 +57411,14 @@ const AdminApp = () => {
       shadow: 'sm'
     }
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_12__.Icon, {
+    as: react_icons_fi__WEBPACK_IMPORTED_MODULE_13__.FiHeart,
+    mr: 2
+  }), "Wishlist Page Settings"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_40__.Tab, {
+    _selected: {
+      bg: 'white',
+      shadow: 'sm'
+    }
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_12__.Icon, {
     as: react_icons_fi__WEBPACK_IMPORTED_MODULE_13__.FiBarChart2,
     mr: 2
   }), "Analytics"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_40__.Tab, {
@@ -57635,6 +57733,248 @@ const AdminApp = () => {
     size: "lg",
     leftIcon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_icons_fi__WEBPACK_IMPORTED_MODULE_13__.FiDownload, null)
   }, "Export Config")))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_42__.TabPanel, {
+    p: 0
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_43__.VStack, {
+    spacing: 8,
+    align: "stretch"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Box, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_9__.Flex, {
+    justify: "space-between",
+    align: "center",
+    mb: 6
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Box, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_15__.Heading, {
+    size: "lg",
+    mb: 2
+  }, "Wishlist Page Customization"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+    color: "gray.600"
+  }, "Customize how your wishlist page looks and behaves")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_21__.Button, {
+    variant: "gradient",
+    leftIcon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_icons_fi__WEBPACK_IMPORTED_MODULE_13__.FiEye, null)
+  }, "Preview Page")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_30__.Grid, {
+    templateColumns: {
+      base: '1fr',
+      lg: '1fr 1fr'
+    },
+    gap: 8
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_43__.VStack, {
+    spacing: 6,
+    align: "stretch"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_44__.FormControl, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_45__.FormLabel, {
+    fontWeight: "semibold"
+  }, "Page Title"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_46__.Input, {
+    value: wishlistPageTitle,
+    onChange: e => setWishlistPageTitle(e.target.value),
+    placeholder: "My Wishlist",
+    size: "lg",
+    borderRadius: "lg"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+    fontSize: "sm",
+    color: "gray.500",
+    mt: 1
+  }, "This will be displayed as the main heading on your wishlist page")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_44__.FormControl, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_45__.FormLabel, {
+    fontWeight: "semibold"
+  }, "Color Scheme"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_47__.Select, {
+    size: "lg",
+    borderRadius: "lg",
+    value: wishlistColorScheme,
+    onChange: e => setWishlistColorScheme(e.target.value)
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+    value: "blue"
+  }, "Blue Theme"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+    value: "purple"
+  }, "Purple Theme"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+    value: "green"
+  }, "Green Theme"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+    value: "red"
+  }, "Red Theme"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+    value: "orange"
+  }, "Orange Theme"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+    value: "pink"
+  }, "Pink Theme"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+    value: "gray"
+  }, "Gray Theme")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+    fontSize: "sm",
+    color: "gray.500",
+    mt: 1
+  }, "Choose the primary color theme for your wishlist page")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_44__.FormControl, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_45__.FormLabel, {
+    fontWeight: "semibold"
+  }, "Layout Style"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_48__.RadioGroup, {
+    value: layoutStyle,
+    onChange: setLayoutStyle
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_49__.Stack, {
+    direction: "row",
+    spacing: 6
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_50__.Radio, {
+    value: "grid"
+  }, "Grid View"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_50__.Radio, {
+    value: "list"
+  }, "List View"))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+    fontSize: "sm",
+    color: "gray.500",
+    mt: 1
+  }, "Choose how products are displayed on the wishlist page")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_44__.FormControl, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_45__.FormLabel, {
+    fontWeight: "semibold"
+  }, "Additional Display Options"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_43__.VStack, {
+    spacing: 4,
+    align: "stretch"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_9__.Flex, {
+    justify: "space-between",
+    align: "center"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Box, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+    fontWeight: "medium"
+  }, "Show Prices"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+    fontSize: "sm",
+    color: "gray.500"
+  }, "Display product prices on wishlist page")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_52__.Switch, {
+    isChecked: showPrices,
+    onChange: e => setShowPrices(e.target.checked),
+    colorScheme: "blue",
+    size: "lg"
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_9__.Flex, {
+    justify: "space-between",
+    align: "center"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Box, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+    fontWeight: "medium"
+  }, "Show Date Added"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+    fontSize: "sm",
+    color: "gray.500"
+  }, "Display when items were added to wishlist")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_52__.Switch, {
+    isChecked: showDateAdded,
+    onChange: e => setShowDateAdded(e.target.checked),
+    colorScheme: "blue",
+    size: "lg"
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_9__.Flex, {
+    justify: "space-between",
+    align: "center"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Box, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+    fontWeight: "medium"
+  }, "Show Product Description"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+    fontSize: "sm",
+    color: "gray.500"
+  }, "Display short product excerpts")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_52__.Switch, {
+    isChecked: showProductDescription,
+    onChange: e => setShowProductDescription(e.target.checked),
+    colorScheme: "blue",
+    size: "lg"
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_9__.Flex, {
+    justify: "space-between",
+    align: "center"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Box, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+    fontWeight: "medium"
+  }, "Show Stock Status"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+    fontSize: "sm",
+    color: "gray.500"
+  }, "Display product availability (In Stock/Out of Stock)")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_52__.Switch, {
+    isChecked: showStockStatus,
+    onChange: e => setShowStockStatus(e.target.checked),
+    colorScheme: "blue",
+    size: "lg"
+  })))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_44__.FormControl, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_45__.FormLabel, {
+    fontWeight: "semibold"
+  }, "Continue Shopping Button"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_46__.Input, {
+    value: continueShoppingText,
+    onChange: e => setContinueShoppingText(e.target.value),
+    placeholder: "Continue Shopping",
+    size: "lg",
+    borderRadius: "lg"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+    fontSize: "sm",
+    color: "gray.500",
+    mt: 1
+  }, "Text displayed on the continue shopping button"))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Box, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+    fontWeight: "semibold",
+    mb: 4
+  }, "Live Preview"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Box, {
+    p: 6,
+    border: "2px dashed",
+    borderColor: "gray.300",
+    borderRadius: "xl",
+    bg: (0,_chakra_ui_react__WEBPACK_IMPORTED_MODULE_3__.useColorModeValue)('gray.50', 'gray.700')
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_15__.Heading, {
+    size: "md",
+    mb: 4,
+    color: `${wishlistColorScheme}.500`
+  }, wishlistPageTitle), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_43__.VStack, {
+    spacing: 4,
+    align: "stretch"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Box, {
+    p: 4,
+    bg: "white",
+    borderRadius: "lg",
+    shadow: "sm"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_10__.HStack, {
+    spacing: 4
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Box, {
+    w: "60px",
+    h: "60px",
+    bg: "gray.200",
+    borderRadius: "md"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Box, {
+    flex: 1
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+    fontWeight: "bold"
+  }, "Sample Product"), showPrices && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+    color: `${wishlistColorScheme}.500`,
+    fontWeight: "semibold"
+  }, "$29.99"), showDateAdded && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+    fontSize: "sm",
+    color: "gray.500"
+  }, "Added: Jan 15, 2024")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_21__.Button, {
+    size: "sm",
+    colorScheme: wishlistColorScheme
+  }, "Add to Cart"))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Box, {
+    p: 4,
+    bg: "white",
+    borderRadius: "lg",
+    shadow: "sm"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_10__.HStack, {
+    spacing: 4
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Box, {
+    w: "60px",
+    h: "60px",
+    bg: "gray.200",
+    borderRadius: "md"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Box, {
+    flex: 1
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+    fontWeight: "bold"
+  }, "Another Product"), showPrices && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+    color: `${wishlistColorScheme}.500`,
+    fontWeight: "semibold"
+  }, "$49.99"), showDateAdded && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+    fontSize: "sm",
+    color: "gray.500"
+  }, "Added: Jan 12, 2024")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_21__.Button, {
+    size: "sm",
+    colorScheme: wishlistColorScheme
+  }, "Add to Cart"))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_8__.Box, {
+    mt: 6,
+    p: 4,
+    bg: (0,_chakra_ui_react__WEBPACK_IMPORTED_MODULE_3__.useColorModeValue)('blue.50', 'blue.900'),
+    borderRadius: "lg"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+    fontSize: "sm",
+    fontWeight: "semibold",
+    color: "blue.600",
+    mb: 2
+  }, "\uD83D\uDCA1 Preview Tip"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_16__.Text, {
+    fontSize: "sm",
+    color: "blue.600"
+  }, "This preview shows how your settings will affect the actual wishlist page appearance."))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_53__.Divider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_10__.HStack, {
+    spacing: 4
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_21__.Button, {
+    variant: "gradient",
+    size: "lg",
+    leftIcon: isLoading ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_54__.Spinner, {
+      size: "sm"
+    }) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_icons_fi__WEBPACK_IMPORTED_MODULE_13__.FiZap, null),
+    onClick: handleSaveWishlistPageSettings,
+    isLoading: isLoading,
+    loadingText: "Saving..."
+  }, "Save Wishlist Settings"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_21__.Button, {
+    variant: "outline",
+    size: "lg",
+    leftIcon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_icons_fi__WEBPACK_IMPORTED_MODULE_13__.FiRefreshCw, null)
+  }, "Reset to Default")))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_42__.TabPanel, {
     p: 0
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_chakra_ui_react__WEBPACK_IMPORTED_MODULE_43__.VStack, {
     spacing: 6,
